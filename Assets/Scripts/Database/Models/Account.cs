@@ -1,21 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace BallBalance
 {
-    public class Account : MonoBehaviour
+    public class Account
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
+        public string id { get; set; }
+        public string name { get; set; }
     }
 }

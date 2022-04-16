@@ -13,5 +13,14 @@ namespace BallBalance.Database
 					Database.Init();
 				});
 		}
+
+		internal static async Task InsertOrReplace(Account account)
+		{
+			await Task.Run(
+				delegate
+				{
+					Database.InsertOrReplace(account);
+				});
+		}
 	}
 }

@@ -14,10 +14,40 @@ namespace BallBalance.Database
 			FileRootPath = Application.persistentDataPath + "/";
 
 			//create SQLite Connection
-			_connection = new SQLiteConnection(FileRootPath + "ball_balance.db", SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
+			OpenDatabase();
 
 			//create tables
 			_connection.CreateTable<Account>();
+		}
+
+		internal static Account GetAccount()
+		{
+			OpenDatabase();
+
+			var account = _connection.Table<Account>().First();
+
+			CloseDatabase();
+
+			return account;
+		}
+
+		internal static void InsertOrReplace(Account account)
+		{
+			OpenDatabase();
+
+			_connection.InsertOrReplace(account);
+
+			CloseDatabase();
+		}
+
+		static void OpenDatabase()
+		{
+			_connection = new SQLiteConnection(FileRootPath + "ball_balance.db", SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
+		}
+
+		static void CloseDatabase()
+		{
+			_connection.Close();
 		}
     }
 }

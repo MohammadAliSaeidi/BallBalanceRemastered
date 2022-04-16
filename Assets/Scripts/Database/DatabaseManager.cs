@@ -3,24 +3,58 @@ using UnityEngine;
 
 namespace BallBalance.Database
 {
-	public static class DatabaseManager
+	public class DatabaseManager : MonoBehaviour
 	{
-		internal static async Task InitDatabase()
+		#region Singletone
+
+		private static DatabaseManager _instance;
+		public static DatabaseManager Instance { get { return _instance; } }
+
+		void Singleton()
 		{
-			await Task.Run(
-				delegate
-				{
-					Database.Init();
-				});
+			if (_instance != null && _instance != this)
+			{
+				Destroy(this.gameObject);
+			}
+			else
+			{
+				_instance = this;
+			}
+			DontDestroyOnLoad(_instance);
 		}
 
-		internal static async Task InsertOrReplace(Account account)
+		#endregion
+
+		void Awake()
 		{
-			await Task.Run(
-				delegate
+			Singleton();
+			Database.Init();
+		}
+
+		internal async Task InsertOrReplace(Account account)
+		{
+			await Task.Run(() =>
 				{
 					Database.InsertOrReplace(account);
 				});
+		}
+
+		internal async Task<Account> GetAccount()
+		{
+			Account account = null;
+
+			await Task.Run(() =>
+				{
+					account = Database.GetAccount();
+				});
+
+			return account;
+		}
+
+		[ContextMenu("Close Database")]
+		void CloseDatabase()
+		{
+			Database.CloseDatabase();
 		}
 	}
 }

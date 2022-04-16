@@ -27,7 +27,9 @@ namespace BallBalance
 
 		#endregion
 
-		public const bool Debug = false;
+		public const bool isDebug = false;
+
+		Account account;
 
 		void Awake()
 		{
@@ -44,7 +46,10 @@ namespace BallBalance
 
 		async Task Init()
 		{
-			await DatabaseManager.InitDatabase();
+			account = await DatabaseManager.Instance.GetAccount();
+
+			if (account == null)
+				Debug.Log("no any account");
 		}
 	}
 }

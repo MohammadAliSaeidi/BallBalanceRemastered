@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using BallBalance.UI;
 
 namespace BallBalance.Utility.Logger
 {
@@ -15,17 +16,24 @@ namespace BallBalance.Utility.Logger
 		void Awake()
 		{
 			// Init floating button
-			floatingButton.button.onClick.AddListener(delegate
+			floatingButton.e_OnClick.AddListener(delegate
 			{
 				if (isShowing)
 				{
+					HideLogs();
 					isShowing = false;
 				}
 				else
 				{
+					ShowLogs();
 					isShowing = true;
 				}
 			});
+		}
+
+		void Start()
+		{
+			HideLogs();
 		}
 
 		internal void Log(string text)
@@ -41,6 +49,11 @@ namespace BallBalance.Utility.Logger
 		internal void HideLogs()
 		{
 			Panel.SetActive(false);
+		}
+
+		internal void ClearLogs()
+		{
+			LogText.text = "No Logs";
 		}
 	}
 }

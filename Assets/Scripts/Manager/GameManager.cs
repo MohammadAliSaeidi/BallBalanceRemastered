@@ -27,6 +27,8 @@ namespace BallBalance
 
 		#endregion
 
+		public const bool Debug = false;
+
 		void Awake()
 		{
 			Singleton();

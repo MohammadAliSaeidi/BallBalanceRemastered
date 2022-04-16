@@ -1,10 +1,12 @@
 using System;
 using UnityEngine;
+using BallBalance.Database;
+using System.Threading.Tasks;
 
 namespace BallBalance
 {
-    public class GameManager : MonoBehaviour
-    {
+	public class GameManager : MonoBehaviour
+	{
 		#region Singletone
 
 		private static GameManager _instance;
@@ -32,12 +34,15 @@ namespace BallBalance
 
 		void Start()
 		{
-			InitDatabase();
+			Task.Run(async () =>
+			{
+				await Init();
+			});
 		}
 
-		void InitDatabase()
+		async Task Init()
 		{
-			
+			await DatabaseManager.InitDatabase();
 		}
 	}
 }

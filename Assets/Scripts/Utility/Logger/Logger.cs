@@ -6,7 +6,7 @@ namespace BallBalance.Utility.Logger
 	public class Logger : MonoBehaviour
 	{
 		// TODO: if the build is on developer mode. then this script will work
-		[SerializeField] Button FloatingButton;
+		[SerializeField] FloatingButton floatingButton;
 		[SerializeField] GameObject Panel;
 		[SerializeField] Text LogText;
 
@@ -15,7 +15,7 @@ namespace BallBalance.Utility.Logger
 		void Awake()
 		{
 			// Init floating button
-			FloatingButton.onClick.AddListener(delegate
+			floatingButton.button.onClick.AddListener(delegate
 			{
 				if (isShowing)
 				{

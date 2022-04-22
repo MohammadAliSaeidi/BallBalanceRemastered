@@ -48,8 +48,16 @@ namespace BallBalance
 		{
 			account = await DatabaseManager.Instance.GetAccount();
 
-			if (account == null)
+			if (account != null)
+			{
+
+			}
+
+			else
+			{
 				Debug.Log("no any account");
+				// TODO: Create user account
+			}
 		}
 	}
 }

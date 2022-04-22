@@ -19,7 +19,7 @@ namespace BallBalance.Database
 			//create tables
 			_connection.CreateTable<Account>();
 
-			CloseDatabase();
+			DisposeDatabase();
 		}
 
 		internal static void InsertOrReplace(Account account)
@@ -28,7 +28,7 @@ namespace BallBalance.Database
 
 			_connection.InsertOrReplace(account);
 
-			CloseDatabase();
+			DisposeDatabase();
 		}
 
 		internal static Account GetAccount()
@@ -39,7 +39,7 @@ namespace BallBalance.Database
 
 				var account = _connection.Table<Account>().FirstOrDefault();
 
-				CloseDatabase();
+				DisposeDatabase();
 
 				return account;
 			}
@@ -54,7 +54,7 @@ namespace BallBalance.Database
 			_connection = new SQLiteConnection(FileRootPath + "ball_balance.db", SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
 		}
 
-		internal static void CloseDatabase()
+		internal static void DisposeDatabase()
 		{
 			_connection.Close();
 		}

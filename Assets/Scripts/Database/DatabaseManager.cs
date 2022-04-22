@@ -54,7 +54,7 @@ namespace BallBalance.Database
 		[ContextMenu("Close Database")]
 		void CloseDatabase()
 		{
-			Database.CloseDatabase();
+			Database.DisposeDatabase();
 		}
 	}
 }

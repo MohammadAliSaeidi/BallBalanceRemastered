@@ -1,34 +1,37 @@
 using UnityEngine;
-using UnityEngine.Events;
+using BallBalance.UnityEventModels;
 
 namespace BallBalance.Utility.Animation
 {
-	[System.Serializable]
-	public class UnityAnimationEvent : UnityEvent<string> { };
 	[RequireComponent(typeof(Animator))]
 	public class AnimationEventDispatcher : MonoBehaviour
 	{
-		public UnityAnimationEvent OnAnimationStart;
-		public UnityAnimationEvent OnAnimationComplete;
+		public UnityEvent_String OnAnimationStart;
+		public UnityEvent_String OnAnimationComplete;
 
 		Animator animator;
 
 		void Awake()
 		{
 			animator = GetComponent<Animator>();
+
 			for (int i = 0; i < animator.runtimeAnimatorController.animationClips.Length; i++)
 			{
 				AnimationClip clip = animator.runtimeAnimatorController.animationClips[i];
 
-				AnimationEvent animationStartEvent = new AnimationEvent();
-				animationStartEvent.time = 0;
-				animationStartEvent.functionName = "AnimationStartHandler";
-				animationStartEvent.stringParameter = clip.name;
+				AnimationEvent animationStartEvent = new AnimationEvent
+				{
+					time = 0,
+					functionName = "AnimationStartHandler",
+					stringParameter = clip.name
+				};
 
-				AnimationEvent animationEndEvent = new AnimationEvent();
-				animationEndEvent.time = clip.length;
-				animationEndEvent.functionName = "AnimationCompleteHandler";
-				animationEndEvent.stringParameter = clip.name;
+				AnimationEvent animationEndEvent = new AnimationEvent
+				{
+					time = clip.length,
+					functionName = "AnimationCompleteHandler",
+					stringParameter = clip.name
+				};
 
 				clip.AddEvent(animationStartEvent);
 				clip.AddEvent(animationEndEvent);
@@ -40,6 +43,7 @@ namespace BallBalance.Utility.Animation
 			Debug.Log($"{name} animation start.");
 			OnAnimationStart?.Invoke(name);
 		}
+
 		public void AnimationCompleteHandler(string name)
 		{
 			Debug.Log($"{name} animation complete.");
@@ -47,3 +51,4 @@ namespace BallBalance.Utility.Animation
 		}
 
 	}
+}

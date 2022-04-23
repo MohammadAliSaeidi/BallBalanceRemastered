@@ -1,46 +1,50 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using BallBalance.Utility.Animation;
 
 namespace BallBalance.UISystem
 {
-
 	[RequireComponent(typeof(Animator))]
 	[RequireComponent(typeof(CanvasGroup))]
+	[RequireComponent(typeof(AnimationEventDispatcher))]
 	public class UIScreen : MonoBehaviour
 	{
 		#region Vaiables
 
-		[Header("Screen Events")]
+		#region Components
+
+		Animator animator;
+		AnimationEventDispatcher animationEventDispatcher;
+
+		#endregion
+
+		#region Events
+
+		[Header("Events")]
 		public UnityEvent OnScreenStart = new UnityEvent();
 		public UnityEvent OnScreenClose = new UnityEvent();
 
-		[HideInInspector] public Animator animator;
-		[HideInInspector] public bool IsShowing { get; private set; }
+		#endregion
 
-		[Header("Overrides")]
-		[SerializeField] public bool OverridePrevScreen = false;
-		public UIScreen PrevScreen;
+		[SerializeField] GameObject Content;
+		internal bool IsShowing { get; private set; }
 
-		[Space(10)]
-		public bool OverrideShowTransitionDuration = false;
-		public float ShowTransitionDuration;
+		[SerializeField] internal UIScreen OverridePrevScreen;
+		[SerializeField] internal float OverrideShowAnimSpeed;
+		[SerializeField] internal float OverrideHideAnimSpeed;
 
 		[Space(10)]
-		public bool OverrideHideTransitionDuration = false;
-		public float HideTransitionDuration;
-
-		[Space(10)]
-		[SerializeField] public bool DelayBeforeStartingScreen;
-		public float CustomDelay = 0;
+		public float DelayBeforeStartingScreen = 0;
 		public float DefaultDelay
 		{
 			get
 			{
-				return UISystem.ShowTransitionDuration / 2;
+				return UISystem.DefaultShowAnimSpeed / 2;
 			}
 		}
+
+		internal ScreenState screenState { get; private set; }
 
 		#endregion
 
@@ -49,6 +53,32 @@ namespace BallBalance.UISystem
 		void Awake()
 		{
 			animator = GetComponent<Animator>();
+			animationEventDispatcher = GetComponent<AnimationEventDispatcher>();
+
+			Content = transform.Find("Content").gameObject;
+
+			animationEventDispatcher.e_OnAnimationComplete.AddListener(
+				delegate
+				{
+					if (screenState == ScreenState.IsBeingClosed)
+					{
+						if (Content != null)
+						{
+							Content.SetActive(false);
+						}
+
+						screenState = ScreenState.Closed;
+					}
+					else if(screenState == ScreenState.IsBeingShown)
+					{
+						screenState = ScreenState.IsShowing;
+					}
+				});
+		}
+
+		void Start()
+		{
+			InitAnimationSpeed();
 		}
 
 		#endregion
@@ -58,58 +88,16 @@ namespace BallBalance.UISystem
 		[ContextMenu("Show Screen")]
 		public void Show()
 		{
-			if (!IsShowing)
+			if (screenState != ScreenState.IsShowing || screenState != ScreenState.IsBeingShown)
 			{
-				UpdateAnimationSpeed();
 				StartCoroutine(Co_ShowScreen());
-				IsShowing = true;
-			}
-		}
-
-		void UpdateAnimationSpeed()
-		{
-			float showAnimSpeed;
-			float hideAnimSpeed;
-
-			if (OverrideShowTransitionDuration)
-				showAnimSpeed = 1 / ShowTransitionDuration;
-			else
-				showAnimSpeed = 1 / UISystem.ShowTransitionDuration;
-
-			if (OverrideHideTransitionDuration)
-				hideAnimSpeed = 1 / HideTransitionDuration;
-			else
-				hideAnimSpeed = 1 / UISystem.HideTranstionDuration;
-
-			animator.SetFloat("ShowTranstionDuration", showAnimSpeed);
-			animator.SetFloat("HideTranstionDuration", hideAnimSpeed);
-		}
-
-		IEnumerator Co_ShowScreen()
-		{
-			float delay = 0;
-
-			if (DelayBeforeStartingScreen)
-			{
-				delay = CustomDelay;
-				yield return new WaitForSeconds(delay);
-			}
-
-			if (OnScreenStart != null)
-			{
-				OnScreenStart.Invoke();
-			}
-
-			if (animator)
-			{
-				animator.SetTrigger("Show");
 			}
 		}
 
 		[ContextMenu("Close Screen")]
 		public void Close()
 		{
-			if (IsShowing)
+			if (screenState != ScreenState.IsBeingClosed || screenState != ScreenState.IsBeingClosed)
 			{
 				if (OnScreenClose != null)
 				{
@@ -117,8 +105,41 @@ namespace BallBalance.UISystem
 				}
 
 				HandleAnimator("Hide");
-				IsShowing = false;
 			}
+		}
+
+		void InitAnimationSpeed()
+		{
+			float showAnimSpeed;
+			float hideAnimSpeed;
+
+			if (OverrideShowAnimSpeed > 0)
+				showAnimSpeed = 1 / OverrideShowAnimSpeed;
+			else
+				showAnimSpeed = 1 / UISystem.DefaultShowAnimSpeed;
+
+			if (OverrideHideAnimSpeed > 0)
+				hideAnimSpeed = 1 / OverrideHideAnimSpeed;
+			else
+				hideAnimSpeed = 1 / UISystem.DefaultHideAnimSpeed;
+
+			animator.SetFloat("ShowTranstionDuration", showAnimSpeed);
+			animator.SetFloat("HideTranstionDuration", hideAnimSpeed);
+		}
+
+		IEnumerator Co_ShowScreen()
+		{
+			if (DelayBeforeStartingScreen > 0)
+			{
+				yield return new WaitForSeconds(DelayBeforeStartingScreen);
+			}
+
+			if (OnScreenStart != null)
+			{
+				OnScreenStart.Invoke();
+			}
+
+			HandleAnimator("Show");
 		}
 
 		void HandleAnimator(string aTrigger)
@@ -126,12 +147,17 @@ namespace BallBalance.UISystem
 			if (animator)
 			{
 				animator.SetTrigger(aTrigger);
-			}
-		}
 
-		public void OnHideAnimFinish()
-		{
-			//gameObject.SetActive(false);
+				if(aTrigger == "Show")
+				{
+					screenState = ScreenState.IsBeingShown;
+				}
+
+				else if (aTrigger == "Hide")
+				{
+					screenState = ScreenState.IsBeingClosed;
+				}
+			}
 		}
 
 		#endregion

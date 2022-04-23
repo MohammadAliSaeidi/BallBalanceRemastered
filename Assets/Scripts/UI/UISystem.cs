@@ -18,8 +18,8 @@ namespace BallBalance.UISystem
 		public UIScreen CurrentScreen { get; protected set; }
 		public UIScreen PrevScreen { get; protected set; }
 
-		public static readonly float ShowTransitionDuration = 0.5f;
-		public static readonly float HideTranstionDuration = 0.5f;
+		public static readonly float DefaultShowAnimSpeed = 0.5f;
+		public static readonly float DefaultHideAnimSpeed = 0.5f;
 
 		#endregion
 
@@ -74,12 +74,20 @@ namespace BallBalance.UISystem
 
 		public virtual void SwitchPrevScreen()
 		{
-			if (CurrentScreen.OverridePrevScreen == true && CurrentScreen.PrevScreen != null)
-				Switch(CurrentScreen.PrevScreen);
-			else if (PrevScreen)
-				Switch(PrevScreen);
+			if (CurrentScreen.OverridePrevScreen != null)
+			{
+				Switch(CurrentScreen.OverridePrevScreen);
+			}
 
-			else Debug.LogError("The previous page is null");
+			else if (PrevScreen)
+			{
+				Switch(PrevScreen);
+			}
+
+			else
+			{
+				Debug.LogError("The previous page is null");
+			}
 		}
 
 		public void CloseAllScreens()

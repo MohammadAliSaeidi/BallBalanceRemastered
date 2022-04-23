@@ -54,13 +54,14 @@ namespace BallBalance
 
 			if (account != null)
 			{
+				SceneManager.Instance.Load(GameLevels.SampleScene_02);
 			}
 
 			else
 			{
 				Debug.Log("no any account");
-				SceneManager.Instance.Load(GameLevels.SampleScene_02);
 				// TODO: Create user account
+				UIManager.ShowSignup();
 			}
 		}
 	}

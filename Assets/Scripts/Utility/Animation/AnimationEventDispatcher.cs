@@ -6,8 +6,8 @@ namespace BallBalance.Utility.Animation
 	[RequireComponent(typeof(Animator))]
 	public class AnimationEventDispatcher : MonoBehaviour
 	{
-		public UnityEvent_String OnAnimationStart;
-		public UnityEvent_String OnAnimationComplete;
+		[HideInInspector] public UnityEvent_String e_OnAnimationStart = new UnityEvent_String();
+		[HideInInspector] public UnityEvent_String e_OnAnimationComplete = new UnityEvent_String();
 
 		Animator animator;
 
@@ -41,13 +41,13 @@ namespace BallBalance.Utility.Animation
 		public void AnimationStartHandler(string name)
 		{
 			Debug.Log($"{name} animation start.");
-			OnAnimationStart?.Invoke(name);
+			e_OnAnimationStart?.Invoke(name);
 		}
 
 		public void AnimationCompleteHandler(string name)
 		{
 			Debug.Log($"{name} animation complete.");
-			OnAnimationComplete?.Invoke(name);
+			e_OnAnimationComplete?.Invoke(name);
 		}
 
 	}

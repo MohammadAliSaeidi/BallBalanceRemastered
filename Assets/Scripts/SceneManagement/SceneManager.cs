@@ -1,7 +1,7 @@
+using BallBalance.Utility.Animation;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
 namespace BallBalance.SceneManagement
 {
@@ -34,29 +34,43 @@ namespace BallBalance.SceneManagement
 
 		#endregion
 
+		Animator TransitionAnimator;
+		AnimationEventDispatcher transitionAnimationEventDispatcher;
+
 		void Awake()
 		{
 			Singleton();
+
+			TransitionAnimator = GetComponentInChildren<Animator>();
+
+			transitionAnimationEventDispatcher = TransitionAnimator.GetComponent<AnimationEventDispatcher>();
 		}
 
 		internal void Load(GameLevel level)
 		{
+			TransitionAnimator.CrossFadeInFixedTime("Show", 0.05f);
 
+			transitionAnimationEventDispatcher
+				.e_OnAnimationComplete.RemoveAllListeners();
+
+			transitionAnimationEventDispatcher
+				.e_OnAnimationComplete.AddListener(delegate
+			{
+				var loadingOperation = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(level.Name);
+				loadingOperation.allowSceneActivation = true;
+				loadingOperation.completed += OnSceneLoaded;
+			});
 		}
-	}
 
-	internal class GamesLevels
-	{
-		internal readonly GameLevel Splash = new GameLevel("Splash");
-	}
-
-	internal class GameLevel
-	{
-		internal readonly string LevelName;
-
-		public GameLevel(string levelName)
+		void OnSceneLoaded(AsyncOperation ao)
 		{
-			LevelName = levelName;
+			transitionAnimationEventDispatcher
+				.e_OnAnimationComplete.RemoveAllListeners();
+
+			TransitionAnimator.CrossFadeInFixedTime("Hide", 0.05f);
+
+			if (e_OnSceneLoaded != null)
+				e_OnSceneLoaded.Invoke();
 		}
 	}
 }

@@ -1,7 +1,9 @@
 using System;
 using UnityEngine;
 using BallBalance.Database;
+using BallBalance.SceneManagement;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace BallBalance
 {
@@ -36,26 +38,28 @@ namespace BallBalance
 			Singleton();
 		}
 
-		void Start()
+		IEnumerator Start()
 		{
-			Task.Run(async () =>
-			{
-				await Init();
-			});
+			yield return Init();
 		}
 
-		async Task Init()
+		IEnumerator Init()
 		{
-			account = await DatabaseManager.Instance.GetAccount();
+			Task getAccount = Task.Run(async () =>
+			{
+				account = await DatabaseManager.Instance.GetAccount();
+			});
+
+			yield return new WaitUntil(() => getAccount.IsCompleted);
 
 			if (account != null)
 			{
-
 			}
 
 			else
 			{
 				Debug.Log("no any account");
+				SceneManager.Instance.Load(GameLevels.SampleScene_02);
 				// TODO: Create user account
 			}
 		}

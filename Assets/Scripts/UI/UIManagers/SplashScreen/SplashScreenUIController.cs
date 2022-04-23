@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using BallBalance.UISystem;
 
+
 namespace BallBalance.SplashScreen
 {
 	public class SplashScreenUIController : UISystem.UISystem
@@ -14,10 +15,6 @@ namespace BallBalance.SplashScreen
 
 		#endregion
 
-		void Awake()
-		{
-		}
-
 		protected override void Start()
 		{
 			base.Start();
@@ -26,6 +23,11 @@ namespace BallBalance.SplashScreen
 		protected override void GetAllScreens()
 		{
 			Screens.Add(s_Signup);
+		}
+
+		internal void ShowSignup()
+		{
+			SwitchTo(s_Signup);
 		}
 	}
 }

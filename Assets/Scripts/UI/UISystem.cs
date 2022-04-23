@@ -10,7 +10,7 @@ namespace BallBalance.UISystem
 
 		#region Vaiables
 
-		public UnityEvent e_OnSwitchedScreen = new UnityEvent();
+		internal UnityEvent e_OnSwitchedScreen = new UnityEvent();
 
 		protected List<UIScreen> Screens = new List<UIScreen>();
 
@@ -32,7 +32,7 @@ namespace BallBalance.UISystem
 			ShowFirstScreen();
 		}
 
-		public void Switch(UIScreen screen)
+		public void SwitchTo(UIScreen screen)
 		{
 			if (screen && CurrentScreen != screen)
 			{
@@ -68,7 +68,7 @@ namespace BallBalance.UISystem
 		{
 			if (FirstScreen)
 			{
-				Switch(FirstScreen);
+				SwitchTo(FirstScreen);
 			}
 		}
 
@@ -76,12 +76,12 @@ namespace BallBalance.UISystem
 		{
 			if (CurrentScreen.OverridePrevScreen != null)
 			{
-				Switch(CurrentScreen.OverridePrevScreen);
+				SwitchTo(CurrentScreen.OverridePrevScreen);
 			}
 
 			else if (PrevScreen)
 			{
-				Switch(PrevScreen);
+				SwitchTo(PrevScreen);
 			}
 
 			else

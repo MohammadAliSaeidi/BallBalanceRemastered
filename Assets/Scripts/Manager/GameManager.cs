@@ -1,9 +1,6 @@
-using System;
 using UnityEngine;
-using BallBalance.Database;
-using BallBalance.SceneManagement;
-using System.Threading.Tasks;
 using System.Collections;
+using BallBalance.SplashScreen;
 
 namespace BallBalance
 {
@@ -31,7 +28,7 @@ namespace BallBalance
 
 		public const bool isDebug = false;
 
-		Account account;
+		internal Account account;
 
 		void Awake()
 		{
@@ -40,29 +37,11 @@ namespace BallBalance
 
 		IEnumerator Start()
 		{
-			yield return Init();
-		}
 
-		IEnumerator Init()
-		{
-			Task getAccount = Task.Run(async () =>
-			{
-				account = await DatabaseManager.Instance.GetAccount();
-			});
-
-			yield return new WaitUntil(() => getAccount.IsCompleted);
-
-			if (account != null)
-			{
-				SceneManager.Instance.Load(GameLevels.SampleScene_02);
-			}
-
-			else
-			{
-				Debug.Log("no any account");
-				// TODO: Create user account
-				UIManager.ShowSignup();
-			}
+			var splashManager = new GameObject("SplashManager", typeof(SplashManager)).GetComponent<SplashManager>();
+			var splashScreenUIController = FindObjectOfType<SplashScreenUIController>();
+			
+			yield return splashManager.Init(splashScreenUIController);
 		}
 	}
 }

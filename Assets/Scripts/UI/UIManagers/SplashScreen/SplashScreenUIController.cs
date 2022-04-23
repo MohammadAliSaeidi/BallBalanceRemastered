@@ -18,6 +18,9 @@ namespace BallBalance.SplashScreen
 		protected override void Start()
 		{
 			base.Start();
+
+			s_Signup.Close();
+			CurrentScreen = null;
 		}
 
 		protected override void GetAllScreens()

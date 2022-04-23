@@ -22,16 +22,19 @@ namespace BallBalance.UISystem
 		#region Events
 
 		[Header("Events")]
-		public UnityEvent OnScreenStart = new UnityEvent();
-		public UnityEvent OnScreenClose = new UnityEvent();
+		internal UnityEvent OnScreenStart = new UnityEvent();
+		internal UnityEvent OnScreenClose = new UnityEvent();
 
 		#endregion
 
 		Transform Content;
 		internal bool IsShowing { get; private set; }
 
+		[Tooltip("will override previous screen when it is not null")]
 		[SerializeField] internal UIScreen OverridePrevScreen;
+		[Tooltip("will override show animation speed when it is higher than \'0\'")]
 		[SerializeField] internal float OverrideShowAnimSpeed;
+		[Tooltip("will override hide animation speed when it is higher than \'0\'")]
 		[SerializeField] internal float OverrideHideAnimSpeed;
 
 		[Space(10)]
@@ -56,7 +59,9 @@ namespace BallBalance.UISystem
 			animationEventDispatcher = GetComponent<AnimationEventDispatcher>();
 
 			if (animator.runtimeAnimatorController == null)
+			{
 				animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(@"DefaultAnimations/DefaultScreenAnimation/UIScreen");
+			}
 		}
 
 		void Awake()
@@ -64,22 +69,22 @@ namespace BallBalance.UISystem
 			Content = transform.Find("Content");
 
 			animationEventDispatcher.e_OnAnimationComplete.AddListener(
-				delegate
+			delegate
+			{
+				if (screenState == ScreenState.IsBeingClosed)
 				{
-					if (screenState == ScreenState.IsBeingClosed)
+					if (Content != null)
 					{
-						if (Content != null)
-						{
-							Content.gameObject.SetActive(false);
-						}
+						Content.gameObject.SetActive(false);
+					}
 
-						screenState = ScreenState.Closed;
-					}
-					else if(screenState == ScreenState.IsBeingShown)
-					{
-						screenState = ScreenState.IsShowing;
-					}
-				});
+					screenState = ScreenState.Closed;
+				}
+				else if (screenState == ScreenState.IsBeingShown)
+				{
+					screenState = ScreenState.IsShowing;
+				}
+			});
 		}
 
 		void Start()
@@ -144,7 +149,7 @@ namespace BallBalance.UISystem
 			{
 				OnScreenStart.Invoke();
 			}
-
+			Content.gameObject.SetActive(true);
 			HandleAnimator("Show");
 		}
 
@@ -154,7 +159,7 @@ namespace BallBalance.UISystem
 			{
 				animator.SetTrigger(aTrigger);
 
-				if(aTrigger == "Show")
+				if (aTrigger == "Show")
 				{
 					screenState = ScreenState.IsBeingShown;
 				}

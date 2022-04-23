@@ -27,7 +27,7 @@ namespace BallBalance.UISystem
 
 		#endregion
 
-		[SerializeField] GameObject Content;
+		Transform Content;
 		internal bool IsShowing { get; private set; }
 
 		[SerializeField] internal UIScreen OverridePrevScreen;
@@ -50,12 +50,18 @@ namespace BallBalance.UISystem
 
 		#region Unity Methods
 
-		void Awake()
+		void OnValidate()
 		{
 			animator = GetComponent<Animator>();
 			animationEventDispatcher = GetComponent<AnimationEventDispatcher>();
 
-			Content = transform.Find("Content").gameObject;
+			if (animator.runtimeAnimatorController == null)
+				animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(@"DefaultAnimations/DefaultScreenAnimation/UIScreen");
+		}
+
+		void Awake()
+		{
+			Content = transform.Find("Content");
 
 			animationEventDispatcher.e_OnAnimationComplete.AddListener(
 				delegate
@@ -64,7 +70,7 @@ namespace BallBalance.UISystem
 					{
 						if (Content != null)
 						{
-							Content.SetActive(false);
+							Content.gameObject.SetActive(false);
 						}
 
 						screenState = ScreenState.Closed;

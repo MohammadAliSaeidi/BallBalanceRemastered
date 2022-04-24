@@ -1,15 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using BallBalance.UISystem;
-
+using UnityEngine.UI;
 
 namespace BallBalance.Signup
 {
-	public class SignupUIController : UISystem.UISystem
+	public class SignupUIController : MonoBehaviour
 	{
-		protected override void GetAllScreens()
+		[SerializeField] InputField inp_Name;
+		[SerializeField] Button b_Signup;
+
+		void Awake()
 		{
+			InitUI();
+		}
+
+		void InitUI()
+		{
+			b_Signup.onClick.AddListener(async () => 
+			{
+				GameManager.Instance.UIController.ShowLoadingEffect();
+
+				await Database.DatabaseManager.Instance.AddUserAccount(new Account() { name = inp_Name.text });
+
+				GameManager.Instance.UIController.HideLoadingEffect();
+			});
 		}
 	}
 }

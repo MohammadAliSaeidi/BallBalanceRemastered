@@ -52,13 +52,24 @@ namespace BallBalance.Database
 			return account;
 		}
 
-		internal async Task AddUserAccount(Account account)
+		internal async Task<bool> AddUserAccount(Account account)
 		{
-			await Task.Run(() =>
-			{
-				Database.SetAccount(account);
-			});
+			bool result = false;
 
+			try
+			{
+				await Task.Run(() =>
+				{
+					Database.SetAccount(account);
+					result = true;
+				});
+			}
+			catch
+			{
+				result = false;
+			}
+
+			return result;
 		}
 
 		[ContextMenu("Close Database")]

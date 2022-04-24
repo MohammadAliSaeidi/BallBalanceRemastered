@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using BallBalance.SplashScreen;
+using System;
 
 namespace BallBalance
 {
@@ -26,6 +27,12 @@ namespace BallBalance
 
 		#endregion
 
+		#region Components
+
+		internal GameManagerUIController UIController;
+
+		#endregion
+
 		public const bool isDebug = false;
 
 		internal Account account;
@@ -33,6 +40,13 @@ namespace BallBalance
 		void Awake()
 		{
 			Singleton();
+
+			InitComponents();
+		}
+
+		void InitComponents()
+		{
+			UIController = GetComponent<GameManagerUIController>();
 		}
 
 		IEnumerator Start()

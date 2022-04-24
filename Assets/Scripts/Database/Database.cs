@@ -1,9 +1,10 @@
 using SQLite4Unity3d;
+using System;
 using UnityEngine;
 
 namespace BallBalance.Database
 {
-    public static class Database
+	public static class Database
 	{
 		internal static string FileRootPath { get; private set; }
 		private static SQLiteConnection _connection;
@@ -49,6 +50,22 @@ namespace BallBalance.Database
 			}
 		}
 
+		internal static void SetAccount(Account account)
+		{
+			try
+			{
+				OpenDatabase();
+
+				_connection.InsertOrReplace(account);
+
+				DisposeDatabase();
+			}
+			catch
+			{
+				throw;
+			}
+		}
+
 		internal static void OpenDatabase()
 		{
 			_connection = new SQLiteConnection(FileRootPath + "ball_balance.db", SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create);
@@ -58,5 +75,5 @@ namespace BallBalance.Database
 		{
 			_connection.Close();
 		}
-    }
+	}
 }

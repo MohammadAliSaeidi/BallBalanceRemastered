@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -49,6 +50,15 @@ namespace BallBalance.Database
 				});
 
 			return account;
+		}
+
+		internal async Task AddUserAccount(Account account)
+		{
+			await Task.Run(() =>
+			{
+				Database.SetAccount(account);
+			});
+
 		}
 
 		[ContextMenu("Close Database")]

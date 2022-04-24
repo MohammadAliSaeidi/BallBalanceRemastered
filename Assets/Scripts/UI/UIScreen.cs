@@ -39,6 +39,7 @@ namespace BallBalance.UISystem
 
 		[Space(10)]
 		public float DelayBeforeStartingScreen = 0;
+		public float DelayBeforeClosingScreen = 0;
 		public float DefaultDelay
 		{
 			get
@@ -101,21 +102,27 @@ namespace BallBalance.UISystem
 		{
 			if (screenState != ScreenState.IsShowing || screenState != ScreenState.IsBeingShown)
 			{
-				StartCoroutine(Co_ShowScreen());
+				if (ShowCoroutine != null)
+				{
+					StopCoroutine(ShowCoroutine);
+				}
+
+				ShowCoroutine = StartCoroutine(Co_Show());
 			}
 		}
 
+		private Coroutine CloseCoroutine;
 		[ContextMenu("Close Screen")]
 		public void Close()
 		{
 			if (screenState != ScreenState.IsBeingClosed || screenState != ScreenState.IsBeingClosed)
 			{
-				if (OnScreenClose != null)
+				if(CloseCoroutine != null)
 				{
-					OnScreenClose.Invoke();
+					StopCoroutine(CloseCoroutine);
 				}
 
-				HandleAnimator("Hide");
+				CloseCoroutine = StartCoroutine(Co_Close());
 			}
 		}
 
@@ -138,7 +145,8 @@ namespace BallBalance.UISystem
 			animator.SetFloat("HideTranstionDuration", hideAnimSpeed);
 		}
 
-		IEnumerator Co_ShowScreen()
+		private Coroutine ShowCoroutine;
+		IEnumerator Co_Show()
 		{
 			if (DelayBeforeStartingScreen > 0)
 			{
@@ -149,8 +157,24 @@ namespace BallBalance.UISystem
 			{
 				OnScreenStart.Invoke();
 			}
+
 			Content.gameObject.SetActive(true);
 			HandleAnimator("Show");
+		}
+
+		private IEnumerator Co_Close()
+		{
+			if(DelayBeforeClosingScreen > 0)
+			{
+				yield return new WaitForSeconds(DelayBeforeClosingScreen);
+
+				if (OnScreenClose != null)
+				{
+					OnScreenClose.Invoke();
+				}
+
+				HandleAnimator("Hide");
+			}
 		}
 
 		void HandleAnimator(string aTrigger)

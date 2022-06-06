@@ -1,21 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using BallBalance.UISystem;
 
 namespace BallBalance
 {
-    public class MainMenuUIController : MonoBehaviour
+    public class MainMenuUIController : UISystem.UISystem
     {
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
+        #region Screens
 
-        // Update is called once per frame
-        void Update()
+        [SerializeField] UIScreen MainMenu;
+
+		#endregion
+
+		protected override void GetAllScreens()
         {
-        
+
         }
     }
 }

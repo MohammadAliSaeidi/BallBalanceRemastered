@@ -51,7 +51,6 @@ namespace BallBalance
 
 		IEnumerator Start()
 		{
-
 			var splashManager = new GameObject("SplashManager", typeof(SplashManager)).GetComponent<SplashManager>();
 			var splashScreenUIController = FindObjectOfType<SplashScreenUIController>();
 			

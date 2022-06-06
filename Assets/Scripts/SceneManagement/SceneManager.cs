@@ -1,5 +1,4 @@
 using BallBalance.Utility.Animation;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,7 +11,7 @@ namespace BallBalance.SceneManagement
 		private static SceneManager _instance;
 		internal static SceneManager Instance { get { return _instance; } }
 
-		void Singleton()
+		private void Singleton()
 		{
 			if (_instance != null && _instance != this)
 			{
@@ -34,10 +33,10 @@ namespace BallBalance.SceneManagement
 
 		#endregion
 
-		Animator TransitionAnimator;
-		AnimationEventDispatcher transitionAnimationEventDispatcher;
+		private Animator TransitionAnimator;
+		private AnimationEventDispatcher transitionAnimationEventDispatcher;
 
-		void Awake()
+		private void Awake()
 		{
 			Singleton();
 
@@ -62,7 +61,7 @@ namespace BallBalance.SceneManagement
 			});
 		}
 
-		void OnSceneLoaded(AsyncOperation ao)
+		private void OnSceneLoaded(AsyncOperation ao)
 		{
 			transitionAnimationEventDispatcher
 				.e_OnAnimationComplete.RemoveAllListeners();
@@ -70,7 +69,9 @@ namespace BallBalance.SceneManagement
 			TransitionAnimator.CrossFadeInFixedTime("Hide", 0.05f);
 
 			if (e_OnSceneLoaded != null)
+			{
 				e_OnSceneLoaded.Invoke();
+			}
 		}
 	}
 }

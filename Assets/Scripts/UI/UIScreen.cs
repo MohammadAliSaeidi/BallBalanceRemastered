@@ -115,7 +115,7 @@ namespace BallBalance.UISystem
 		[ContextMenu("Close Screen")]
 		public void Close()
 		{
-			if (screenState != ScreenState.IsBeingClosed || screenState != ScreenState.IsBeingClosed)
+			if (screenState != ScreenState.IsBeingClosed || screenState != ScreenState.Closed)
 			{
 				if(CloseCoroutine != null)
 				{

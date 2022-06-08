@@ -2,24 +2,31 @@ using UnityEngine;
 
 namespace BallBalance
 {
+	[RequireComponent(typeof(CameraLookController))]
+	[RequireComponent(typeof(BallMovement))]
 	public class InputManager : MonoBehaviour
 	{
-		[SerializeField] private Transform _camera;
+		#region Components
+
+		private CameraLookController _cameraLookController;
+		private BallMovement _ballMovement;
+
+		#endregion
+
 		private Controls _controls;
-		private Vector2 _look;
 
 		private void Awake()
 		{
 			_controls = new Controls();
-
-			_controls.BallMovement.Look.performed += ctx => _look = ctx.ReadValue<Vector2>();
-			_controls.BallMovement.Look.canceled += ctx => _look = Vector2.zero;
+			_cameraLookController = GetComponent<CameraLookController>();
+			_ballMovement = GetComponent<BallMovement>();
 		}
 
-		private void Update()
+		private void LateUpdate()
 		{
-			Vector2 r = new Vector2(-_look.y, _look.x) * Time.deltaTime * 100;
-			_camera.Rotate(r, Space.World);
+			_cameraLookController.HandleLook(_controls.BallMovement.Look.ReadValue<Vector2>());
+			_ballMovement.HandlePlayerMovement(_controls.BallMovement.Move.ReadValue<Vector2>());
+			_controls.BallMovement.Jump.performed += context => _ballMovement.Jump();
 		}
 
 		private void OnEnable()

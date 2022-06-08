@@ -22,7 +22,7 @@ namespace BallBalance
 			_ballMovement = GetComponent<BallMovement>();
 		}
 
-		private void LateUpdate()
+		private void FixedUpdate()
 		{
 			_cameraLookController.HandleLook(_controls.BallMovement.Look.ReadValue<Vector2>());
 			_ballMovement.HandlePlayerMovement(_controls.BallMovement.Move.ReadValue<Vector2>());

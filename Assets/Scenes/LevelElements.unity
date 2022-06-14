@@ -5415,22 +5415,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4159121022075712462, guid: 6c4e91f0249f97341a3b7b13bfe6a9c9, type: 3}
-      propertyPath: m_BackGroundColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4159121022075712462, guid: 6c4e91f0249f97341a3b7b13bfe6a9c9, type: 3}
-      propertyPath: m_BackGroundColor.b
-      value: 0.68433076
-      objectReference: {fileID: 0}
-    - target: {fileID: 4159121022075712462, guid: 6c4e91f0249f97341a3b7b13bfe6a9c9, type: 3}
-      propertyPath: m_BackGroundColor.g
-      value: 0.81960785
-      objectReference: {fileID: 0}
-    - target: {fileID: 4159121022075712462, guid: 6c4e91f0249f97341a3b7b13bfe6a9c9, type: 3}
-      propertyPath: m_BackGroundColor.r
-      value: 0.11372549
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c4e91f0249f97341a3b7b13bfe6a9c9, type: 3}
 --- !u!1 &1996652645
@@ -5647,34 +5631,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 346403044, guid: 3ff7a9f0a9bb5cd429f570abeb5062d1, type: 3}
-      propertyPath: looping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 346403044, guid: 3ff7a9f0a9bb5cd429f570abeb5062d1, type: 3}
-      propertyPath: stopAction
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 346403044, guid: 3ff7a9f0a9bb5cd429f570abeb5062d1, type: 3}
-      propertyPath: EmissionModule.enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5732512873325962753, guid: 3ff7a9f0a9bb5cd429f570abeb5062d1, type: 3}
-      propertyPath: m_UseGravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5732512873325962753, guid: 3ff7a9f0a9bb5cd429f570abeb5062d1, type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5732512873325962755, guid: 3ff7a9f0a9bb5cd429f570abeb5062d1, type: 3}
-      propertyPath: m_UseGravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5732512873325962755, guid: 3ff7a9f0a9bb5cd429f570abeb5062d1, type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6215086325900103791, guid: 3ff7a9f0a9bb5cd429f570abeb5062d1, type: 3}
       propertyPath: m_Name
       value: Door
@@ -5723,34 +5679,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7121854164864976956, guid: 3ff7a9f0a9bb5cd429f570abeb5062d1, type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9096774622080401458, guid: 3ff7a9f0a9bb5cd429f570abeb5062d1, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 9096774622080401458, guid: 3ff7a9f0a9bb5cd429f570abeb5062d1, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 9096774622080401458, guid: 3ff7a9f0a9bb5cd429f570abeb5062d1, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9096774622080401458, guid: 3ff7a9f0a9bb5cd429f570abeb5062d1, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9096774622080401458, guid: 3ff7a9f0a9bb5cd429f570abeb5062d1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9096774622080401458, guid: 3ff7a9f0a9bb5cd429f570abeb5062d1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ff7a9f0a9bb5cd429f570abeb5062d1, type: 3}
 --- !u!114 &5732512873325962748 stripped
@@ -5771,14 +5699,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1749725306913116122, guid: 5693ecbb2dddd664fb91c126713fc881, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 4dabef6ff97cee748b7fb4700d21efd1, type: 2}
-    - target: {fileID: 2529998513249788459, guid: 5693ecbb2dddd664fb91c126713fc881, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: f0dbacc36dac1424dbbfe9105b944c96, type: 2}
+    - target: {fileID: 930226660925350079, guid: 5693ecbb2dddd664fb91c126713fc881, type: 3}
+      propertyPath: _springPower
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 6944971052868562234, guid: 5693ecbb2dddd664fb91c126713fc881, type: 3}
       propertyPath: m_Name
       value: SpringTile

@@ -2,17 +2,17 @@
 
 namespace BallBalance
 {
-	[RequireComponent(typeof(OnTriggerEnterEventHandler))]
+	[RequireComponent(typeof(TriggerEventHandler))]
 	[RequireComponent(typeof(SpringJoint))]
 	public class SpringTile : MonoBehaviour
 	{
-		internal OnTriggerEnterEventHandler onTriggerHandler;
+		internal TriggerEventHandler onTriggerHandler;
 		internal SpringJoint springJoint;
 
 		private void Awake()
 		{
 			springJoint = GetComponent<SpringJoint>();
-			onTriggerHandler = GetComponent<OnTriggerEnterEventHandler>();
+			onTriggerHandler = GetComponent<TriggerEventHandler>();
 		}
 	}
 }

@@ -6,7 +6,7 @@ namespace BallBalance
 {
     public class MovableElement : MonoBehaviour
     {
-        [SerializeField] private OnTriggerEnterEventHandler _playerEnterTrigger;
+        [SerializeField] private TriggerEventHandler _playerEnterTrigger;
 
 		[Space(20)]
 		[SerializeField] private bool _setThisAsParent;

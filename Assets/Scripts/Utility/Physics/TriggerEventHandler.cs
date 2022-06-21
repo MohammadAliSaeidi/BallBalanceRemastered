@@ -3,7 +3,7 @@ using BallBalance.UnityEventModels;
 
 namespace BallBalance
 {
-	public class OnTriggerEnterEventHandler : MonoBehaviour
+	public class TriggerEventHandler : MonoBehaviour
 	{
 		public UnityEvent_Collider e_OnTriggerEnter = new UnityEvent_Collider();
 		public UnityEvent_Collider e_OnTriggerExit = new UnityEvent_Collider();

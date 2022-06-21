@@ -416,8 +416,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lookSpeed: 2
   _cameraPivot: {fileID: 4159121022573266964}
-  minTilt: 45
-  maxTilt: 75
+  minTilt: 80
+  maxTilt: 45
   LookSmoothing: 5
 --- !u!114 &2700277453417164373
 MonoBehaviour:
@@ -668,7 +668,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 150
+  far clip plane: 50
   field of view: 45
   orthographic: 0
   orthographic size: 10

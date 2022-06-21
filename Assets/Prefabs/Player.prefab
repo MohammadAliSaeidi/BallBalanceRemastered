@@ -434,10 +434,10 @@ MonoBehaviour:
   onJumped:
     m_PersistentCalls:
       m_Calls: []
-  angularPower: 2
+  angularPower: 5
   movePower: 2
   jumpPower: 5
-  maxAngularVelocity: 10
+  maxAngularVelocity: 5
 --- !u!114 &2700277453417164372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,7 +515,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 6dbd69ca85a1e0c47a37ff63e058db6e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -654,7 +654,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.11372549, g: 0.81960785, b: 0.68433076, a: 1}
+  m_BackGroundColor: {r: 1, g: 0.41960785, b: 0.41960785, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -708,8 +708,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colorChangeSpeed: 0.1
-  s: 0.43
-  v: 1
+  s: 0.35
+  v: 0.9
 --- !u!1 &4159121022573266970
 GameObject:
   m_ObjectHideFlags: 0

@@ -4984,6 +4984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bouncyTile: {fileID: 5679433766519094980}
+  _maxRelativeVelocity: 5
 --- !u!114 &5679433766519094981
 MonoBehaviour:
   m_ObjectHideFlags: 0

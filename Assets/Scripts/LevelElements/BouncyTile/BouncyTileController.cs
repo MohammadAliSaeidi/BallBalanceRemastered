@@ -5,6 +5,7 @@ namespace BallBalance
 	public class BouncyTileController : MonoBehaviour
 	{
 		[SerializeField] private BouncyTile _bouncyTile;
+		[SerializeField] private float _maxRelativeVelocity= 30; 
 
 		#region Unity Methods
 
@@ -25,7 +26,14 @@ namespace BallBalance
 			if (collision.collider.CompareTag("Player"))
 			{
 				var ball = collision.gameObject.GetComponent<Ball>();
-				ball.Rb.AddForce(2 * collision.relativeVelocity.magnitude * _bouncyTile.transform.up, ForceMode.Impulse);
+
+				var relativeVelocity = collision.relativeVelocity.magnitude;
+				if (relativeVelocity > _maxRelativeVelocity)
+				{
+					relativeVelocity = _maxRelativeVelocity;
+				}
+
+				ball.Rb.AddForce(2 * relativeVelocity * _bouncyTile.transform.up, ForceMode.Impulse);
 			}
 		}
 

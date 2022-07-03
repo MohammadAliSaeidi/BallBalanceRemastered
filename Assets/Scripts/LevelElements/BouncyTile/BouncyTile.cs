@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace BallBalance
+namespace BallBalance.LevelElements.BouncyTile
 {
 	[RequireComponent(typeof(OnCollisionEnterEventHandler))]
 	public class BouncyTile : MonoBehaviour

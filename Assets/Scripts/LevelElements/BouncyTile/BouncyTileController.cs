@@ -1,19 +1,20 @@
 using UnityEngine;
 
-namespace BallBalance
+namespace BallBalance.LevelElements.BouncyTile
 {
 	public class BouncyTileController : MonoBehaviour
 	{
-		[SerializeField] private BouncyTile _bouncyTile;
-		[SerializeField] private float _maxRelativeVelocity= 30; 
+		[SerializeField] private BouncyTile bouncyTile;
+		[SerializeField] private float maxRelativeVelocity = 5;
+		[SerializeField] private GameObject bounceEffect;
 
 		#region Unity Methods
 
 		private void Start()
 		{
-			if (_bouncyTile != null)
+			if (bouncyTile != null)
 			{
-				_bouncyTile.CollisionHandler.e_OnCollisionEnter.AddListener(ShootPlayer);
+				bouncyTile.CollisionHandler.e_OnCollisionEnter.AddListener(ShootPlayer);
 			}
 		}
 
@@ -23,18 +24,19 @@ namespace BallBalance
 
 		private void ShootPlayer(Collision collision)
 		{
-			if (collision.collider.CompareTag("Player"))
+			if (!collision.collider.CompareTag("Player")) return;
+			
+			var ball = collision.gameObject.GetComponent<Ball>();
+
+			var relativeVelocity = collision.relativeVelocity.magnitude;
+			if (relativeVelocity > maxRelativeVelocity)
 			{
-				var ball = collision.gameObject.GetComponent<Ball>();
-
-				var relativeVelocity = collision.relativeVelocity.magnitude;
-				if (relativeVelocity > _maxRelativeVelocity)
-				{
-					relativeVelocity = _maxRelativeVelocity;
-				}
-
-				ball.Rb.AddForce(2 * relativeVelocity * _bouncyTile.transform.up, ForceMode.Impulse);
+				relativeVelocity = maxRelativeVelocity;
 			}
+
+			ball.Rb.AddForce(2 * relativeVelocity * bouncyTile.transform.up, ForceMode.Impulse);
+
+			Instantiate(bounceEffect, bouncyTile.transform.position, bouncyTile.transform.rotation);
 		}
 
 		#endregion

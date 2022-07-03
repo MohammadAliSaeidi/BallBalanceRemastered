@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5679433765061655837
 Transform:
@@ -4890,7 +4890,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5679433766519094983
 Transform:
@@ -4983,8 +4983,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 939756f25a933924d94dac9482404023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bouncyTile: {fileID: 5679433766519094980}
-  _maxRelativeVelocity: 5
+  bouncyTile: {fileID: 5679433766519094980}
+  maxRelativeVelocity: 5
+  bounceEffect: {fileID: 8839530681020432782, guid: 4967a966247e2e14aa6abad9b78c1acd, type: 3}
 --- !u!114 &5679433766519094981
 MonoBehaviour:
   m_ObjectHideFlags: 0

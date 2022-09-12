@@ -1,22 +1,34 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace BallBalance
 {
 	public class LevelManager : MonoBehaviour
 	{
+		public int LevelId;
 		public Ball CurrentBall;
+		public List<Gem> Gems = new List<Gem>();
+		public int Heals;
+		public int TimeRemainingInSeconds;
 
-		public void OnEnable()
+		private void OnEnable()
 		{
 			GameManager.Instance.currentLevelManager = this;
 		}
 
-		public void OnDisable()
+		private void OnDisable()
 		{
 			if (GameManager.Instance.currentLevelManager == this)
 			{
 				GameManager.Instance.currentLevelManager = null;
 			}
+		}
+
+		private void Start()
+		{
+			// init Gems
+			Gems = FindObjectsOfType<Gem>().ToList();
 		}
 	}
 }

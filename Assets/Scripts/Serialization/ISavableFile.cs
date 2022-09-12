@@ -1,4 +1,4 @@
-﻿namespace BallBalance.Serialization
+﻿namespace BallBalance.SavingService
 {
 	public interface ISavableFile
 	{

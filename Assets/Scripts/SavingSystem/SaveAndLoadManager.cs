@@ -16,12 +16,20 @@ namespace BallBalance
 			public readonly int lives;
 			public readonly List<Gem> gemsCollected;
 			public readonly int remainingTimeInSec;
+
+			public SaveFile(Vector3 playerPosition, int lives, List<Gem> gemsCollected, int remainingTimeInSec)
+			{
+				this.playerPosition = playerPosition;
+				this.lives = lives;
+				this.gemsCollected = gemsCollected;
+				this.remainingTimeInSec = remainingTimeInSec;
+			}
 		}
 
 
 		public void SaveGame()
 		{
-
+			SaveFile fileToSave = new SaveFile(GameManager.Instance);
 		}
 
 		public void LoadGame()

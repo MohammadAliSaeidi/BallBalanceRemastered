@@ -1,6 +1,6 @@
 ﻿namespace BallBalance.Serialization
 {
-	public interface ISavable
+	public interface ISavableFile
 	{
 	}
 }

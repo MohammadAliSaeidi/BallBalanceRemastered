@@ -1,22 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using BallBalance.UISystem;
+using UnityEngine;
 
 namespace BallBalance
 {
-    public class MainMenuUIController : UISystem.UISystem
-    {
-        #region Screens
+	public class MainMenuUIController : UISystem.UISystem
+	{
+		#region Screens
 
-        [SerializeField] UIScreen MainMenu;
+		[SerializeField] UIScreen MainMenu;
 
 		#endregion
 
 		protected override void GetAllScreens()
-        {
+		{
 
-        }
-    }
+		}
+	}
 }

@@ -1,7 +1,6 @@
-using UnityEngine;
-using System.Collections;
 using BallBalance.SplashScreen;
-using System;
+using System.Collections;
+using UnityEngine;
 
 namespace BallBalance
 {
@@ -30,6 +29,7 @@ namespace BallBalance
 		#region Components
 
 		internal GameManagerUIController UIController;
+		internal LevelManager currentLevelManager;
 
 		#endregion
 
@@ -53,7 +53,7 @@ namespace BallBalance
 		{
 			var splashManager = new GameObject("SplashManager", typeof(SplashManager)).GetComponent<SplashManager>();
 			var splashScreenUIController = FindObjectOfType<SplashScreenUIController>();
-			
+
 			yield return splashManager.Init(splashScreenUIController);
 		}
 	}

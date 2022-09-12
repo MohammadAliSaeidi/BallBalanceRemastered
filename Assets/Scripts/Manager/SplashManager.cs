@@ -1,15 +1,14 @@
 using BallBalance.Database;
 using BallBalance.SceneManagement;
 using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BallBalance.SplashScreen
 {
-    internal class SplashManager : MonoBehaviour
-    {
-		internal IEnumerator Init(SplashScreenUIController UIController)
+	internal class SplashManager : MonoBehaviour
+	{
+		internal IEnumerator Init(SplashScreenUIController uIController)
 		{
 			Task getAccount = Task.Run(async () =>
 			{
@@ -27,7 +26,7 @@ namespace BallBalance.SplashScreen
 			{
 				Debug.Log("no any account");
 				// TODO: Create user account
-				UIController.ShowSignup();
+				uIController.ShowSignup();
 			}
 		}
 	}

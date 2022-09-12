@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BallBalance
 {
-	public class SaveAndLoadManager : MonoBehaviour
+	public partial class SaveAndLoadManager : MonoBehaviour
 	{
 		// What should be saved?
 		// 1: The ball position
@@ -14,7 +14,6 @@ namespace BallBalance
 		{
 			public readonly Vector3 playerPosition;
 			public readonly int lives;
-			// TODO: Create Gem class
 			public readonly List<Gem> gemsCollected;
 			public readonly int remainingTimeInSec;
 		}

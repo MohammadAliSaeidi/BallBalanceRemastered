@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BallBalance.SavingService
@@ -50,7 +51,7 @@ namespace BallBalance.SavingService
 			}
 		}
 
-		public static void WriteToJsonFile<T>(string filePath, T objectToWrite, bool append = false) where T : new()
+		public static void SaveObjectAsJson<T>(string filePath, T objectToWrite, bool append = false) where T : new()
 		{
 			TextWriter writer = null;
 			try
@@ -72,7 +73,7 @@ namespace BallBalance.SavingService
 			}
 		}
 
-		public static T ReadFromJsonFile<T>(string filePath) where T : new()
+		public static T LoadObjectFromJson<T>(string filePath) where T : new()
 		{
 			TextReader reader = null;
 			try
@@ -94,6 +95,20 @@ namespace BallBalance.SavingService
 					reader.Close();
 				}
 			}
+		}
+
+		public static void SaveTextToFile(string content, string filePath)
+		{
+			FileInfo file = new FileInfo(filePath);
+			file.Directory.Create();
+			File.WriteAllText(file.FullName, content);
+		}
+
+		public static string LoadTextFromFile(string filePath)
+		{
+			var result = File.ReadAllText(filePath);
+
+			return result;
 		}
 	}
 }

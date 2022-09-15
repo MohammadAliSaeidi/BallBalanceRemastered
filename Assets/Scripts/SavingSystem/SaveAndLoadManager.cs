@@ -1,4 +1,5 @@
 using BallBalance.SavingService;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BallBalance
@@ -11,33 +12,32 @@ namespace BallBalance
 		// 3: Gems that has been collected
 		// 4: Time
 
-		public static void SaveGame()
+		private static readonly string savePath;
+
+		static SaveAndLoadManager()
 		{
-			var currentLevelManager = GameManager.Instance.currentLevelManager;
-			if (currentLevelManager == null)
-			{
-				Debug.LogError("The game could not be saved because you are not in a level.");
-				return;
-			}
-
-			Vector3 playerPosition = currentLevelManager.CurrentBall.transform.position;
-
-			SaveFile fileToSave = new SaveFile(
-				playerPosition,
-				currentLevelManager.Heals,
-				currentLevelManager.Gems,
-				currentLevelManager.TimeRemainingInSeconds);
-
-			string filePath = $"{Application.persistentDataPath}/Saves/SaveGame_{currentLevelManager.LevelId}";
-
-			string json = JsonUtility.ToJson(fileToSave);
-
-			AESEncryptionService.FileEncrypt(json, "1234");	
+			savePath = $"{Application.persistentDataPath}/Saves/SaveGame_";
 		}
 
-		public static void LoadGame()
+		public static void SaveGame(int levelId, Vector3 playerPosition, int lives, List<Gem> gems, int timeRemainingInSeconds)
 		{
-			// TODO: LoadGame
+			SaveFileModel fileToSave = new SaveFileModel(
+				playerPosition,
+				lives,
+				gems,
+				timeRemainingInSeconds);
+
+			string json = JsonUtility.ToJson(fileToSave);
+			var encryptedJson = Serialization.Encryption.StringCipher.Encrypt(json, "1234");
+			FileSavingService.SaveTextToFile(encryptedJson, $"{savePath}{levelId}");
+		}
+
+		public static SaveFileModel LoadGame(int levelId)
+		{
+			var encryptedJson = FileSavingService.LoadTextFromFile($"{savePath}{levelId}");
+			var decryptedJson = Serialization.Encryption.StringCipher.Decrypt(encryptedJson, "1234");
+			var loadedGame = JsonUtility.FromJson<SaveFileModel>(decryptedJson);
+			return loadedGame;
 		}
 
 

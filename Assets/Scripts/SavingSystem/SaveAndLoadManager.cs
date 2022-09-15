@@ -32,9 +32,7 @@ namespace BallBalance
 
 			string json = JsonUtility.ToJson(fileToSave);
 
-			AESEncryptionService.FileEncrypt(json, "1234");
-
-			
+			AESEncryptionService.FileEncrypt(json, "1234");	
 		}
 
 		public static void LoadGame()

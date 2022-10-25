@@ -19,7 +19,7 @@ namespace BallBalance.SplashScreen
 
 			if (GameManager.Instance.account != null)
 			{
-				SceneManager.Instance.Load(GameLevels.SampleScene_02);
+				SceneManager.Instance.Load(GameLevels.MainMenu);
 			}
 
 			else

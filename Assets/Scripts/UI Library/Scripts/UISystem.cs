@@ -1,35 +1,38 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace BallBalance.UISystem
+namespace UIManager
 {
 	public abstract class UISystem : MonoBehaviour
 	{
-
 		#region Vaiables
 
 		internal UnityEvent e_OnSwitchedScreen = new UnityEvent();
 
-		protected List<UIScreen> Screens = new List<UIScreen>();
+		protected List<UIScreen> _screensList = new List<UIScreen>();
 
 		public UIScreen FirstScreen;
 		public UIScreen CurrentScreen { get; protected set; }
 		public UIScreen PrevScreen { get; protected set; }
 
-		public static readonly float DefaultShowAnimSpeed = 0.5f;
-		public static readonly float DefaultHideAnimSpeed = 0.5f;
+		public static readonly float DefaultShowAnimSpeed = 1f;
+		public static readonly float DefaultHideAnimSpeed = 1f;
 
 		#endregion
 
-
-
 		#region Methods
+
+		protected abstract void GetAllScreens();
+
+		protected abstract void InitUI();
+
 
 		protected virtual void Start()
 		{
 			ShowFirstScreen();
+			GetAllScreens();
+			InitUI();
 		}
 
 		public void SwitchTo(UIScreen screen)
@@ -38,8 +41,12 @@ namespace BallBalance.UISystem
 			{
 				if (CurrentScreen)
 				{
-					CurrentScreen.gameObject.SetActive(true);
-					CurrentScreen.Close();
+					if (screen.screenType == ScreenType.Normal)
+					{
+						CurrentScreen.gameObject.SetActive(true);
+						CurrentScreen.Close();
+					}
+
 					PrevScreen = CurrentScreen;
 				}
 
@@ -48,20 +55,10 @@ namespace BallBalance.UISystem
 				CurrentScreen.Show();
 
 				if (e_OnSwitchedScreen != null)
+				{
 					e_OnSwitchedScreen.Invoke();
+				}
 			}
-		}
-
-		public void Show(UIScreen screen)
-		{
-			screen.gameObject.SetActive(true);
-			screen.Show();
-		}
-
-		public void Close(UIScreen screen)
-		{
-			screen.gameObject.SetActive(true);
-			screen.Close();
 		}
 
 		public virtual void ShowFirstScreen()
@@ -92,14 +89,12 @@ namespace BallBalance.UISystem
 
 		public void CloseAllScreens()
 		{
-			Screens.ForEach(i =>
+			_screensList.ForEach(i =>
 			{
 				i.gameObject.SetActive(true);
 				i.Close();
 			});
 		}
-
-		protected abstract void GetAllScreens();
 
 		#endregion
 	}

@@ -1,4 +1,4 @@
-﻿namespace BallBalance.UISystem
+﻿namespace UIManager
 {
 	internal enum ScreenState
 	{

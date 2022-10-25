@@ -44,5 +44,15 @@ namespace BallBalance
 				_cameraPivot.localRotation = Quaternion.Euler(-_horizontal, _vertical, 0);
 			}
 		}
+
+		public void DisableCameraController()
+		{
+
+		}
+
+		public void EnableCameraController()
+		{
+
+		}
 	}
 }

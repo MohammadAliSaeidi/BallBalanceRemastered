@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BallBalance.SavingService
@@ -32,17 +31,25 @@ namespace BallBalance.SavingService
 		{
 			try
 			{
-				BinaryFormatter formatter = new BinaryFormatter();
-				FileStream fileStream;
-				fileStream = File.Open(filePath, FileMode.Open);
+				if (File.Exists(filePath))
+				{
+					BinaryFormatter formatter = new BinaryFormatter();
+					FileStream fileStream;
+					fileStream = File.Open(filePath, FileMode.Open);
 
-				T obj = (T)(formatter.Deserialize(fileStream));
+					T obj = (T)(formatter.Deserialize(fileStream));
 
-				fileStream.Flush();
-				fileStream.Close();
-				fileStream.Dispose();
+					fileStream.Flush();
+					fileStream.Close();
+					fileStream.Dispose();
 
-				return obj;
+					return obj;
+				}
+
+				else
+				{
+					return default;
+				}	
 			}
 			catch (Exception e)
 			{

@@ -11,6 +11,7 @@ namespace BallBalance
 		public List<Gem> Gems = new List<Gem>();
 		public int Heals;
 		public int TimeRemainingInSeconds;
+		public FinishPointManager FinishPoint;
 
 		private void OnEnable()
 		{
@@ -29,6 +30,23 @@ namespace BallBalance
 		{
 			// init Gems
 			Gems = FindObjectsOfType<Gem>().ToList();
+			FinishPoint = FindObjectOfType<FinishPointManager>();
+			FinishPoint.e_OnFinishPointHit.AddListener(OnFinished);
+		}
+
+		public void Pause()
+		{
+
+		}
+
+		public void Resume()
+		{
+
+		}
+
+		private void OnFinished()
+		{
+
 		}
 	}
 }

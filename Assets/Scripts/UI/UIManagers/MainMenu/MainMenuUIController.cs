@@ -1,19 +1,30 @@
-using BallBalance.UISystem;
+using UIManager;
 using UnityEngine;
 
 namespace BallBalance
 {
-	public class MainMenuUIController : UISystem.UISystem
+	public class MainMenuUIController : UISystem
 	{
 		#region Screens
 
-		[SerializeField] UIScreen MainMenu;
+		[Header("Screens")]
+		[SerializeField] MainMenu s_MainMenu;
 
 		#endregion
+
+		protected override void Start()
+		{
+			base.Start();
+		}
 
 		protected override void GetAllScreens()
 		{
 
+		}
+
+		protected override void InitUI()
+		{
+			
 		}
 	}
 }

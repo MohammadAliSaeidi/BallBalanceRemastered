@@ -90,6 +90,7 @@ namespace BallBalance
 				return;
 			}
 
+			// if the ball is near the ground
 			if (!Physics.CheckSphere(
 					_rb.transform.position + new Vector3(0, -0.01f, 0),
 					_rb.GetComponent<SphereCollider>().radius,
@@ -100,6 +101,22 @@ namespace BallBalance
 
 			_rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
 			onJumped?.Invoke();
+		}
+
+		#endregion
+
+		#region Public Methods
+
+		public void DisableMovement()
+		{
+			_allowMove = false;
+			_allowJump = false;
+		}
+
+		public void EnableMovement()
+		{
+			_allowMove = true;
+			_allowJump = true;
 		}
 
 		#endregion

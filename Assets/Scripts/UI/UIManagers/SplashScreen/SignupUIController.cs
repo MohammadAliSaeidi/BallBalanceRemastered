@@ -1,37 +1,72 @@
+using UIManager;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace BallBalance.Signup
 {
-	public class SignupUIController : MonoBehaviour
+	public class SignupUIController : UIScreen
 	{
+		[SerializeField] private InputField inp_Name;
+		[SerializeField] private Button b_Signup;
+		[SerializeField] private Animator anim_Error;
+		[SerializeField] private Text txt_Error;
+
 		#region Events
 
 		internal UnityEvent e_OnSignup = new UnityEvent();
 
 		#endregion
 
-		[SerializeField] private InputField inp_Name;
-		[SerializeField] private Button b_Signup;
-
-		void Awake()
+		public void InitUI()
 		{
-			InitUI();
+			inp_Name.onValueChanged.AddListener(
+				delegate
+				{
+					CheckInput();
+				});
+
+			b_Signup.onClick.AddListener(
+				async () =>
+				{
+					if (!CheckInput())
+					{
+						return;
+					}
+
+					GameManager.Instance.UIController.ShowLoadingEffect();
+
+					await Database.DatabaseManager.Instance.AddUserAccount(new Account() { name = inp_Name.text });
+
+					EventHandler.FireEvent(ref e_OnSignup);
+
+					GameManager.Instance.UIController.HideLoadingEffect();
+				});
 		}
 
-		void InitUI()
+		private bool CheckInput()
 		{
-			b_Signup.onClick.AddListener(async () => 
+			var inpText = inp_Name.text;
+
+			if (InputChecker.IsEmptyOrWhiteSpace(inpText))
 			{
-				GameManager.Instance.UIController.ShowLoadingEffect();
+				ShowError("The name can not be empty!");
 
-				await Database.DatabaseManager.Instance.AddUserAccount(new Account() { name = inp_Name.text });
+				return false;
+			}
 
-				EventHandler.FireEvent(ref e_OnSignup);
+			return true;
+		}
 
-				GameManager.Instance.UIController.HideLoadingEffect();
-			});
+		private void ShowError(string errorText)
+		{
+			txt_Error.text = errorText;
+			anim_Error.CrossFadeInFixedTime("Show", 0.05f);
+		}
+
+		private void HideError()
+		{
+			anim_Error.CrossFadeInFixedTime("Hide", 0.05f);
 		}
 	}
 }

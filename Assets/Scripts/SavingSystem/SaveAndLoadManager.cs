@@ -6,12 +6,6 @@ namespace BallBalance
 {
 	public static class SaveAndLoadManager
 	{
-		// What should be saved?
-		// 1: The ball position
-		// 2: Player lives
-		// 3: Gems that has been collected
-		// 4: Time
-
 		private static readonly string savePath;
 
 		static SaveAndLoadManager()
@@ -19,25 +13,25 @@ namespace BallBalance
 			savePath = $"{Application.persistentDataPath}/Saves/SaveGame_";
 		}
 
-		public static void SaveGame(int levelId, Vector3 playerPosition, int lives, List<Gem> gems, int timeRemainingInSeconds)
+		public static void SaveGame(string accountName, AccountSaveModel fileToSave)
 		{
-			SaveFileModel fileToSave = new SaveFileModel(
-				playerPosition,
-				lives,
-				gems,
-				timeRemainingInSeconds);
 
-			string json = JsonUtility.ToJson(fileToSave);
-			var encryptedJson = Serialization.Encryption.StringCipher.Encrypt(json, "1234");
-			FileSavingService.SaveTextToFile(encryptedJson, $"{savePath}{levelId}");
+			FileSavingService.SerializeToBinary(fileToSave, savePath);
+
+			//string json = JsonUtility.ToJson(fileToSave);
+			//var encryptedJson = Serialization.Encryption.StringCipher.Encrypt(json, "1234");
+			//FileSavingService.SaveTextToFile(encryptedJson, $"{savePath}{levelId}");
 		}
 
-		public static SaveFileModel LoadGame(int levelId)
+		public static AccountSaveModel LoadSaves(string accountName)
 		{
-			var encryptedJson = FileSavingService.LoadTextFromFile($"{savePath}{levelId}");
-			var decryptedJson = Serialization.Encryption.StringCipher.Decrypt(encryptedJson, "1234");
-			var loadedGame = JsonUtility.FromJson<SaveFileModel>(decryptedJson);
-			return loadedGame;
+			//var encryptedJson = FileSavingService.LoadTextFromFile($"{savePath}{levelId}");
+			//var decryptedJson = Serialization.Encryption.StringCipher.Decrypt(encryptedJson, "1234");
+			//var loadedGame = JsonUtility.FromJson<SaveFileModel>(decryptedJson);
+
+			var loadedGameObj = FileSavingService.DeserializeFromBinary<AccountSaveModel>(savePath);
+
+			return loadedGameObj;
 		}
 
 

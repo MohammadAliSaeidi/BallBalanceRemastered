@@ -1,10 +1,10 @@
 ﻿using System;
 using UnityEngine;
-using BallBalance.UISystem;
+using UIManager;
 
 namespace BallBalance
 {
-	internal class GameManagerUIController : UISystem.UISystem
+	internal class GameManagerUIController : UISystem
 	{
 		[SerializeField] private UIScreen s_LoadingEffect;
 
@@ -13,9 +13,18 @@ namespace BallBalance
 			s_LoadingEffect.DelayBeforeClosingScreen = 1;
 		}
 
+		protected override void Start()
+		{
+			base.Start();
+		}
+
+		protected override void InitUI()
+		{
+		}
+
 		protected override void GetAllScreens()
 		{
-			Screens.Add(s_LoadingEffect);
+			_screensList.Add(s_LoadingEffect);
 		}
 
 		internal void ShowLoadingEffect()

@@ -1,17 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
+using BallBalance.SceneManagement;
+using BallBalance.Signup;
+using UIManager;
 using UnityEngine;
-using BallBalance.UISystem;
 
 
 namespace BallBalance.SplashScreen
 {
-	public class SplashScreenUIController : UISystem.UISystem
+	public class SplashScreenUIController : UISystem
 	{
 		#region UI Elements
 
 		[Header("UI Elements")]
-		[SerializeField] UIScreen s_Signup;
+		[SerializeField] private SignupUIController s_Signup;
 
 		#endregion
 
@@ -25,12 +25,23 @@ namespace BallBalance.SplashScreen
 
 		protected override void GetAllScreens()
 		{
-			Screens.Add(s_Signup);
+			_screensList.Add(s_Signup);
 		}
 
 		internal void ShowSignup()
 		{
 			SwitchTo(s_Signup);
+
+			s_Signup.e_OnSignup.AddListener(
+				delegate
+				{
+					SceneManager.Instance.Load(GameLevels.MainMenu);
+				});
+		}
+
+		protected override void InitUI()
+		{
+			s_Signup.InitUI();
 		}
 	}
 }

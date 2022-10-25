@@ -70,33 +70,6 @@ namespace BallBalance.Serialization.Encryption
 			}
 		}
 
-		public static byte[] EncryptBytes(byte[] bytes, string password)
-		{
-			byte[] ivSeed = Guid.NewGuid().ToByteArray();
-
-			var rfc = new Rfc2898DeriveBytes(password, ivSeed);
-			byte[] Key = rfc.GetBytes(16);
-			byte[] IV = rfc.GetBytes(16);
-
-			byte[] encrypted;
-
-			using (MemoryStream mstream = new MemoryStream())
-			using (AesCryptoServiceProvider aesProvider = new AesCryptoServiceProvider())
-			using (CryptoStream cryptoStream = new CryptoStream(mstream, aesProvider.CreateEncryptor(Key, IV), CryptoStreamMode.Write))
-			{
-				cryptoStream.Write(bytes, 0, bytes.Length);
-				encrypted = mstream.ToArray();
-			}
-
-			var messageLengthAs32Bits = Convert.ToInt32(bytes.Length);
-			var messageLength = BitConverter.GetBytes(messageLengthAs32Bits);
-
-			encrypted = encrypted.Prepend(ivSeed);
-			encrypted = encrypted.Prepend(messageLength);
-
-			return encrypted;
-		}
-
 		public static void FileDecrypt(string filePath, string decryptedFileSavingPath, string password)
 		{
 			byte[] passwordBytes = System.Text.Encoding.UTF8.GetBytes(password);

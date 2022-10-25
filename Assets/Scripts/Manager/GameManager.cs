@@ -1,3 +1,4 @@
+using BallBalance.SceneManagement;
 using BallBalance.SplashScreen;
 using System.Collections;
 using UnityEngine;
@@ -36,6 +37,7 @@ namespace BallBalance
 		public const bool isDebug = false;
 
 		internal Account account;
+		internal AccountSaveModel AccountSave;
 
 		void Awake()
 		{
@@ -55,6 +57,24 @@ namespace BallBalance
 			var splashScreenUIController = FindObjectOfType<SplashScreenUIController>();
 
 			yield return splashManager.Init(splashScreenUIController);
+
+			AccountSave = SaveAndLoadManager.LoadSaves(account.name);
+		}
+
+		public void ResumeGame()
+		{
+			var savedLevel = AccountSave.lastPlayedLevelSave;
+
+			if (savedLevel == null)
+			{
+				// start new game
+				SceneManager.Instance.Load(GameLevels.Tutorial);
+			}
+
+			else
+			{
+
+			}
 		}
 	}
 }

@@ -344,10 +344,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8882167589023077319, guid: 1f50550bd98774d4994f82c0ba1ef08c, type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
-    - target: {fileID: 8882167589023077319, guid: 1f50550bd98774d4994f82c0ba1ef08c, type: 3}
       propertyPath: m_Name
       value: SavePoint
       objectReference: {fileID: 0}
@@ -554,6 +550,7 @@ MonoBehaviour:
   Gems: []
   Heals: 3
   TimeRemainingInSeconds: 300
+  FinishPoint: {fileID: 0}
 --- !u!4 &1666853857
 Transform:
   m_ObjectHideFlags: 0

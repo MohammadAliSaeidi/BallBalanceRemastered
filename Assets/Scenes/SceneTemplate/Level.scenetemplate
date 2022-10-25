@@ -18,33 +18,31 @@ MonoBehaviour:
   preview: {fileID: 8328415207916461372}
   dependencies:
   - dependency: {fileID: 1877528666275802183, guid: 6c4e91f0249f97341a3b7b13bfe6a9c9, type: 3}
-    instantiationMode: 0
+    instantiationMode: 1
   - dependency: {fileID: 8882167589023077319, guid: 1f50550bd98774d4994f82c0ba1ef08c, type: 3}
-    instantiationMode: 0
+    instantiationMode: 1
   - dependency: {fileID: 2800000, guid: b98c011045762414c93a73a9f2dd7602, type: 3}
-    instantiationMode: 0
+    instantiationMode: 1
   - dependency: {fileID: 2100000, guid: 6dbd69ca85a1e0c47a37ff63e058db6e, type: 2}
-    instantiationMode: 0
+    instantiationMode: 1
   - dependency: {fileID: 2100000, guid: 913de22b2183d0c46bf4ec7c53e6993e, type: 2}
-    instantiationMode: 0
-  - dependency: {fileID: 2100000, guid: a4d195061277f6d4b8a44585aa79544e, type: 2}
-    instantiationMode: 0
+    instantiationMode: 1
   - dependency: {fileID: 2800000, guid: 43d93697d9271884fadc7fe462d675db, type: 3}
-    instantiationMode: 0
+    instantiationMode: 1
   - dependency: {fileID: 2100000, guid: 663f02c2cd20f5f4392511a8c2a25880, type: 2}
-    instantiationMode: 0
+    instantiationMode: 1
   - dependency: {fileID: 6450492589391951277, guid: dda525cdd4158a54bbf6f2e781238d46, type: 3}
-    instantiationMode: 0
+    instantiationMode: 1
   - dependency: {fileID: 2100000, guid: 404f35aaab1f5dc4499a8db1e54b05c9, type: 2}
-    instantiationMode: 0
+    instantiationMode: 1
   - dependency: {fileID: 2100000, guid: b55133416065c9e41a09d23299521f58, type: 2}
-    instantiationMode: 0
+    instantiationMode: 1
   - dependency: {fileID: 1629460425734094352, guid: 9f1f4a2a4854d414faedc08364056d53, type: 3}
-    instantiationMode: 0
+    instantiationMode: 1
   - dependency: {fileID: 8156487231328482569, guid: c58a6a7be112ba248b3a316f28ceb856, type: 3}
-    instantiationMode: 0
+    instantiationMode: 1
   - dependency: {fileID: 2100000, guid: dbc6d487592735d43b91a04392da4023, type: 2}
-    instantiationMode: 0
+    instantiationMode: 1
   templatePipeline: {fileID: 0}
   addToDefaults: 0
 --- !u!28 &8328415207916461372

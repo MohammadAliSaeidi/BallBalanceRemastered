@@ -13,7 +13,7 @@ namespace BallBalance
 
 		#endregion
 
-		private Controls _controls;
+		internal Controls _controls { get; private set; }
 
 		private void Awake()
 		{

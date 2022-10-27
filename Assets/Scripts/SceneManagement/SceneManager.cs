@@ -36,7 +36,7 @@ namespace BallBalance.SceneManagement
 		private Animator TransitionAnimator;
 		private AnimationEventDispatcher transitionAnimationEventDispatcher;
 
-		private void Awake()
+		private void OnEnable()
 		{
 			Singleton();
 
@@ -59,6 +59,15 @@ namespace BallBalance.SceneManagement
 				loadingOperation.allowSceneActivation = true;
 				loadingOperation.completed += OnSceneLoaded;
 			});
+		}
+
+		internal bool IsCurrentScene(string sceneName)
+		{
+			if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == sceneName)
+			{
+				return true;
+			}
+			return false;
 		}
 
 		private void OnSceneLoaded(AsyncOperation ao)

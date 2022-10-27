@@ -26,9 +26,13 @@ namespace BallBalance.Database
 
 		#endregion
 
-		void Awake()
+		void OnEnable()
 		{
 			Singleton();
+		}
+
+		private void Awake()
+		{
 			Database.Init();
 		}
 

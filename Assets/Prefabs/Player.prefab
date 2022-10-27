@@ -162,6 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -360,6 +361,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3442046153922467112}
+  - component: {fileID: 7885624779790472451}
   - component: {fileID: 2700277453417164368}
   - component: {fileID: 2700277453417164370}
   - component: {fileID: 2700277453417164373}
@@ -391,6 +393,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7885624779790472451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877528666275802183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf767a0b287f5b7468951ceb4372cd5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2700277453417164368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -417,7 +431,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lookSpeed: 2
   _cameraPivot: {fileID: 4159121022573266964}
-  minTilt: 80
+  minTilt: 75
   maxTilt: 45
   LookSmoothing: 5
 --- !u!114 &2700277453417164373
@@ -665,7 +679,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4159121022075712460}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -3.5}
+  m_LocalPosition: {x: 0, y: 0, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -697,7 +711,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 50
-  field of view: 58.709892
+  field of view: 45
   orthographic: 0
   orthographic size: 10
   m_Depth: -1

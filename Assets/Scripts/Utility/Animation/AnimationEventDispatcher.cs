@@ -40,13 +40,11 @@ namespace BallBalance.Utility.Animation
 
 		public void AnimationStartHandler(string name)
 		{
-			Debug.Log($"{name} animation start.");
 			e_OnAnimationStart?.Invoke(name);
 		}
 
 		public void AnimationCompleteHandler(string name)
 		{
-			Debug.Log($"{name} animation complete.");
 			e_OnAnimationComplete?.Invoke(name);
 		}
 

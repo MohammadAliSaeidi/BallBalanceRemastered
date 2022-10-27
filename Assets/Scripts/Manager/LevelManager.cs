@@ -12,6 +12,7 @@ namespace BallBalance
 		public int Heals;
 		public int TimeRemainingInSeconds;
 		public FinishPointManager FinishPoint;
+		public PlayerManager playerManager;
 
 		private void OnEnable()
 		{
@@ -28,10 +29,14 @@ namespace BallBalance
 
 		private void Start()
 		{
+			playerManager = FindObjectOfType<PlayerManager>();
+
 			// init Gems
 			Gems = FindObjectsOfType<Gem>().ToList();
+
 			FinishPoint = FindObjectOfType<FinishPointManager>();
-			FinishPoint.e_OnFinishPointHit.AddListener(OnFinished);
+			if (FinishPoint)
+				FinishPoint.e_OnFinishPointHit.AddListener(OnFinished);
 		}
 
 		public void Pause()

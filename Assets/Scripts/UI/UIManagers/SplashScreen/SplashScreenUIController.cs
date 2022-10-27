@@ -11,7 +11,7 @@ namespace BallBalance.SplashScreen
 		#region UI Elements
 
 		[Header("UI Elements")]
-		[SerializeField] private SignupUIController s_Signup;
+		[SerializeField] private SignupUIScreen s_Signup;
 
 		#endregion
 

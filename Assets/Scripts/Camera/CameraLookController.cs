@@ -1,10 +1,9 @@
 using UnityEngine;
-using Cinemachine;
 
 namespace BallBalance
 {
-    public class CameraLookController : MonoBehaviour
-    {
+	public class CameraLookController : MonoBehaviour
+	{
 		[SerializeField] private float _lookSpeed = 1;
 		[SerializeField] private Transform _cameraPivot;
 
@@ -18,6 +17,8 @@ namespace BallBalance
 		private float _smoothH;
 		private float _smoothV;
 
+		internal bool allowCameraLook;
+
 		private void Start()
 		{
 			_horizontal = -_cameraPivot.eulerAngles.x;
@@ -26,8 +27,11 @@ namespace BallBalance
 
 		public void HandleLook(Vector2 delta)
 		{
-			_horizontal += delta.y * _lookSpeed;
-			_vertical += delta.x * _lookSpeed;
+			if (allowCameraLook)
+			{
+				_horizontal += delta.y * _lookSpeed;
+				_vertical += delta.x * _lookSpeed;
+			}
 
 			_horizontal = Mathf.Clamp(_horizontal, -minTilt, maxTilt);
 			LookSmoothing = Mathf.Clamp(LookSmoothing, 0f, 10f);
@@ -43,16 +47,6 @@ namespace BallBalance
 			{
 				_cameraPivot.localRotation = Quaternion.Euler(-_horizontal, _vertical, 0);
 			}
-		}
-
-		public void DisableCameraController()
-		{
-
-		}
-
-		public void EnableCameraController()
-		{
-
 		}
 	}
 }

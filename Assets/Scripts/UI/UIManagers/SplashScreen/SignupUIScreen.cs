@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace BallBalance.Signup
 {
-	public class SignupUIController : UIScreen
+	public class SignupUIScreen : UIScreen
 	{
 		[SerializeField] private InputField inp_Name;
 		[SerializeField] private Button b_Signup;

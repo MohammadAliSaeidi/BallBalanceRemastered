@@ -7,7 +7,7 @@ namespace BallBalance
 	{
 		public UnityEvent_Collider e_OnTriggerEnter = new UnityEvent_Collider();
 
-		private void OnCollisionEnter(Collider collider)
+		private void OnTriggerEnter(Collider collider)
 		{
 			e_OnTriggerEnter?.Invoke(collider);
 		}

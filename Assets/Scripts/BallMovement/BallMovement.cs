@@ -14,8 +14,8 @@ namespace BallBalance
 		[SerializeField] private float jumpPower = 5;
 		[SerializeField] private float maxAngularVelocity = 10;
 		private float _groundCheck;
-		private bool _allowJump = true;
-		private bool _allowMove = true;
+		internal bool allowJump = true;
+		internal bool allowMove = true;
 
 		private Rigidbody _rb;
 
@@ -57,7 +57,7 @@ namespace BallBalance
 
 		public void HandlePlayerMovement(Vector2 inputValue)
 		{
-			if (!_rb || !_allowMove)
+			if (!_rb || !allowMove)
 			{
 				return;
 			}
@@ -85,7 +85,7 @@ namespace BallBalance
 				return;
 			}
 
-			if (!_allowJump)
+			if (!allowJump)
 			{
 				return;
 			}
@@ -101,22 +101,6 @@ namespace BallBalance
 
 			_rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
 			onJumped?.Invoke();
-		}
-
-		#endregion
-
-		#region Public Methods
-
-		public void DisableMovement()
-		{
-			_allowMove = false;
-			_allowJump = false;
-		}
-
-		public void EnableMovement()
-		{
-			_allowMove = true;
-			_allowJump = true;
 		}
 
 		#endregion

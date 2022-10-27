@@ -7,6 +7,9 @@ namespace BallBalance
 {
 	public class GameManager : MonoBehaviour
 	{
+		[SerializeField] private GameObject _sceneManager;
+		[SerializeField] private GameObject _databaseManager;
+
 		#region Singletone
 
 		private static GameManager _instance;
@@ -44,6 +47,10 @@ namespace BallBalance
 			Singleton();
 
 			InitComponents();
+
+			// Create Managers
+			CreateSceneManager();
+			CreateDatabaseManager();
 		}
 
 		void InitComponents()
@@ -53,12 +60,26 @@ namespace BallBalance
 
 		IEnumerator Start()
 		{
-			var splashManager = new GameObject("SplashManager", typeof(SplashManager)).GetComponent<SplashManager>();
-			var splashScreenUIController = FindObjectOfType<SplashScreenUIController>();
+			if (SceneManager.Instance.IsCurrentScene(GameLevels.Splash.Name))
+			{
+				var splashManager = new GameObject("SplashManager", typeof(SplashManager)).GetComponent<SplashManager>();
+				var splashScreenUIController = FindObjectOfType<SplashScreenUIController>();
 
-			yield return splashManager.Init(splashScreenUIController);
+				yield return splashManager.Init(splashScreenUIController);
 
-			AccountSave = SaveAndLoadManager.LoadSaves(account.name);
+				if (account != null)
+					AccountSave = SaveAndLoadManager.LoadSaves(account.name);
+			}
+		}
+
+		private void CreateSceneManager()
+		{
+			Instantiate(_sceneManager);
+		}
+
+		private void CreateDatabaseManager()
+		{
+			Instantiate(_databaseManager);
 		}
 
 		public void ResumeGame()

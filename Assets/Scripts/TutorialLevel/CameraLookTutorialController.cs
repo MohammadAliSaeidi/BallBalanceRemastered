@@ -3,33 +3,23 @@ using UnityEngine.Events;
 
 namespace BallBalance.Tutorial
 {
-	internal class CameraLookTutorialController : MonoBehaviour, ITutorialController
+	internal class CameraLookTutorialController : TutorialController
 	{
-		public float minCameraInputToPassTutorial = 200;
+		[SerializeField] private float MinCameraInputToPassTutorial = 200;
+		private float _totalCameraRotation;
 
-		internal bool IsPassed;
-		private bool started = false;
-		private float totalCameraRotation;
-		private Controls _controls;
-
-		private void Awake()
+		protected override void Start()
 		{
-			_controls = FindObjectOfType<InputManager>()._controls;
-		}
-
-		public void StartTutorial()
-		{
-			IsPassed = false;
-			started = true;
+			base.Start();
 		}
 
 		private void Update()
 		{
-			if (started)
+			if (_isStarted)
 			{
-				totalCameraRotation += _controls.BallMovement.Look.ReadValue<Vector2>().magnitude;
+				_totalCameraRotation += _controls.BallMovement.Look.ReadValue<Vector2>().magnitude;
 
-				if (totalCameraRotation > minCameraInputToPassTutorial)
+				if (_totalCameraRotation > MinCameraInputToPassTutorial)
 				{
 					IsPassed = true;
 				}

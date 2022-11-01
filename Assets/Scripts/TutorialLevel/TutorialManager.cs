@@ -6,8 +6,13 @@ namespace BallBalance.Tutorial
 	[RequireComponent(typeof(CameraLookTutorialController), typeof(TutorialUIManager), typeof(MovementTutorialController))]
 	public class TutorialManager : MonoBehaviour
 	{
+		[SerializeField] private Animator anim_Ground;
+		[SerializeField] private TutorialWall[] Walls;
+
 		private TutorialUIManager uIManager;
 		private PlayerManager playerManager;
+		private bool _isWallsEnable = false;
+		private Ball _currentBall;
 
 		#region Tutorials
 
@@ -15,8 +20,6 @@ namespace BallBalance.Tutorial
 		private MovementTutorialController movementTutorial;
 
 		#endregion
-
-		[SerializeField] private Animator anim_Ground;
 
 		private void Awake()
 		{
@@ -29,6 +32,31 @@ namespace BallBalance.Tutorial
 		private void Start()
 		{
 			StartCoroutine(Co_StartTutorial());
+			_currentBall = GameManager.Instance.currentLevelManager.CurrentBall;
+		}
+
+		private void Update()
+		{
+			if (_isWallsEnable)
+			{
+				foreach (var wall in Walls)
+				{
+					if (wall.AxisX)
+					{
+						wall.transform.position = new Vector3(
+																x: _currentBall.transform.position.x,
+																y: _currentBall.transform.position.y,
+																z: wall.transform.position.z);
+					}
+					if (wall.AxisZ)
+					{
+						wall.transform.position = new Vector3(
+																x: wall.transform.position.x,
+																y: _currentBall.transform.position.y,
+																z: _currentBall.transform.position.z);
+					}
+				}
+			}
 		}
 
 		private IEnumerator Co_StartTutorial()
@@ -47,9 +75,11 @@ namespace BallBalance.Tutorial
 			{
 				anim_Ground.Play("ground_expantion");
 			}
+			_isWallsEnable = true;
+			yield return new WaitForSeconds(1.5f);
 			movementTutorial.StartTutorial();
 			playerManager.EnablePlayerMovement();
-			
+
 			yield return new WaitUntil(() => movementTutorial.IsPassed);
 
 			uIManager.ShowMessage(Messages.MoveCamera);

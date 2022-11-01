@@ -10,12 +10,21 @@ namespace BallBalance.Tutorial
 		[SerializeField] private Animator anim_TutorialMessage;
 		[SerializeField] private Text txt_Message;
 
+		[Header("Hand")]
+		[SerializeField] private Animator anim_LeftHand;
+		[SerializeField] private Animator anim_RightHand;
+
 		private bool _isHidden = true;
 		private Utility.Animation.AnimationEventDispatcher tutorialMessageAnimEvent;
 
 		private void Awake()
 		{
 			tutorialMessageAnimEvent = anim_TutorialMessage.GetComponent<AnimationEventDispatcher>();
+		}
+
+		private void Start()
+		{
+			anim_LeftHand.gameObject.SetActive(false);
 		}
 
 		internal void ShowMessage(string message)
@@ -55,6 +64,13 @@ namespace BallBalance.Tutorial
 				anim_TutorialMessage.CrossFadeInFixedTime("Hide", 0.05f);
 				_isHidden = true;
 			}
+		}
+
+		internal void ShowLookJoystickAndHandTutorial()
+		{
+
+			anim_LeftHand.gameObject.SetActive(true);
+			anim_LeftHand.Play("TutorialLeftJoystick");
 		}
 	}
 }

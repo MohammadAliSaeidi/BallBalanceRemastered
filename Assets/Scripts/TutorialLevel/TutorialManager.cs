@@ -79,6 +79,7 @@ namespace BallBalance.Tutorial
 			yield return new WaitForSeconds(1.5f);
 			movementTutorial.StartTutorial();
 			playerManager.EnablePlayerMovement();
+			uIManager.ShowLookJoystickAndHandTutorial();
 
 			yield return new WaitUntil(() => movementTutorial.IsPassed);
 

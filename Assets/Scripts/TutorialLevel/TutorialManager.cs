@@ -4,10 +4,15 @@ using UnityEngine;
 namespace BallBalance.Tutorial
 {
 	[RequireComponent(typeof(CameraLookTutorialController), typeof(TutorialUIManager), typeof(MovementTutorialController))]
+	[RequireComponent(typeof(GemTutorialController))]
 	public class TutorialManager : MonoBehaviour
 	{
 		[SerializeField] private Animator anim_Ground;
 		[SerializeField] private TutorialWall[] Walls;
+
+		[Header("Gem tutorial")]
+		[SerializeField] private OnTriggerEnterEventHandler gemTutorialTrigger;
+		[SerializeField] private Animator anim_GemSection;
 
 		private TutorialUIManager uIManager;
 		private PlayerManager playerManager;
@@ -18,8 +23,11 @@ namespace BallBalance.Tutorial
 
 		private CameraLookTutorialController cameraLookTutorial;
 		private MovementTutorialController movementTutorial;
+		private GemTutorialController gemTutorial;
 
 		#endregion
+
+
 
 		private void Awake()
 		{
@@ -27,6 +35,7 @@ namespace BallBalance.Tutorial
 			playerManager = FindObjectOfType<PlayerManager>();
 			cameraLookTutorial = GetComponent<CameraLookTutorialController>();
 			movementTutorial = GetComponent<MovementTutorialController>();
+			gemTutorial = GetComponent<GemTutorialController>();
 		}
 
 		private void Start()
@@ -61,42 +70,60 @@ namespace BallBalance.Tutorial
 
 		private IEnumerator Co_StartTutorial()
 		{
-			playerManager.FreezePlayer();
-			yield return new WaitForSeconds(2);
-
-			uIManager.ShowMessage(Messages.Hi);
-			yield return new WaitForSeconds(2);
-
-			uIManager.ShowMessage(Messages.Intro);
-			yield return new WaitForSeconds(3);
-
-			uIManager.ShowMessage(Messages.MoveBall);
-			if (anim_Ground)
+			// Init tutorial and Intro
 			{
-				anim_Ground.Play("ground_expantion");
+				playerManager.FreezePlayer();
+				yield return new WaitForSeconds(2);
+
+				uIManager.ShowMessage("Hello my friend!");
+				yield return new WaitForSeconds(2);
+
+				uIManager.ShowMessage("We are here to learn some basics");
+				yield return new WaitForSeconds(3);
 			}
-			_isWallsEnable = true;
-			yield return new WaitForSeconds(1.5f);
-			movementTutorial.StartTutorial();
-			playerManager.EnablePlayerMovement();
-			uIManager.ShowLookJoystickAndHandTutorial();
 
-			yield return new WaitUntil(() => movementTutorial.IsPassed);
+			// Movement Tutorial
+			{
+				uIManager.ShowMessage("Try to move the ball with this little joystick");
+				if (anim_Ground)
+				{
+					anim_Ground.Play("ground_expantion");
+				}
+				_isWallsEnable = true;
+				yield return new WaitForSeconds(1.5f);
+				movementTutorial.StartTutorial();
+				playerManager.EnablePlayerMovement();
+				uIManager.ShowHandTutorial(TutorialUIManager.HandTutorialType.Movement);
+				movementTutorial.e_OnPlayerInteract.AddListener(() => uIManager.HideHandTutorial(TutorialUIManager.HandTutorialType.Movement));
 
-			uIManager.ShowMessage(Messages.MoveCamera);
-			cameraLookTutorial.StartTutorial();
-			playerManager.EnableCameraLook();
+				yield return new WaitUntil(() => movementTutorial.IsPassed);
+			}
 
+			// Camera control tutorial
+			{
+				uIManager.ShowMessage("Great!");
+				yield return new WaitForSeconds(2);
+				uIManager.ShowMessage("Now try to move the camera around the ball");
+				cameraLookTutorial.StartTutorial();
+				playerManager.EnableCameraLook();
+				uIManager.ShowHandTutorial(TutorialUIManager.HandTutorialType.Look);
+				cameraLookTutorial.e_OnPlayerInteract.AddListener(() => uIManager.HideHandTutorial(TutorialUIManager.HandTutorialType.Look));
 
-		}
+				yield return new WaitUntil(() => cameraLookTutorial.IsPassed);
+				uIManager.ShowMessage("Well done, very good!");
+			}
 
-
-		internal class Messages
-		{
-			public const string Hi = "Hello my friend!";
-			public const string Intro = "We are here to learn some basics";
-			public const string MoveBall = "Try to move the ball with this little joystick";
-			public const string MoveCamera = "Great! Now try to move the camera around the ball";
+			// Gem tutorial
+			{
+				uIManager.ShowMessage("Now Lets get to the next part");
+				gemTutorialTrigger.e_OnTriggerEnter.AddListener(
+					delegate (Collider collider)
+					{
+						gemTutorial.StartTutorial();
+						Destroy(gemTutorialTrigger.gameObject);
+					});
+				anim_GemSection.Play("ground_expantion");
+			}
 		}
 	}
 }

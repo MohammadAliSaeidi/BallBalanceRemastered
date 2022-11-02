@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace BallBalance.Tutorial
 {
-	internal class TutorialUIManager : MonoBehaviour
+	internal partial class TutorialUIManager : MonoBehaviour
 	{
 		[SerializeField] private Animator anim_TutorialMessage;
 		[SerializeField] private Text txt_Message;
@@ -25,6 +25,7 @@ namespace BallBalance.Tutorial
 		private void Start()
 		{
 			anim_LeftHand.gameObject.SetActive(false);
+			anim_RightHand.gameObject.SetActive(false);
 		}
 
 		internal void ShowMessage(string message)
@@ -66,11 +67,34 @@ namespace BallBalance.Tutorial
 			}
 		}
 
-		internal void ShowLookJoystickAndHandTutorial()
+		internal void ShowHandTutorial(HandTutorialType handTutorialType)
 		{
+			switch (handTutorialType)
+			{
+				case HandTutorialType.Look:
+				anim_RightHand.gameObject.SetActive(true);
+				anim_RightHand.Play("TutorialJoystick");
+				break;
 
-			anim_LeftHand.gameObject.SetActive(true);
-			anim_LeftHand.Play("TutorialLeftJoystick");
+				case HandTutorialType.Movement:
+				anim_LeftHand.gameObject.SetActive(true);
+				anim_LeftHand.Play("TutorialJoystick");
+				break;
+			}
+		}
+
+		internal void HideHandTutorial(HandTutorialType handTutorialType)
+		{
+			switch (handTutorialType)
+			{
+				case HandTutorialType.Look:
+				anim_RightHand.CrossFadeInFixedTime("Hide", 0.5f, 0, -0.5f);
+				break;
+
+				case HandTutorialType.Movement:
+				anim_LeftHand.CrossFadeInFixedTime("Hide", 0.5f, 0, -0.5f);
+				break;
+			}
 		}
 	}
 }

@@ -14,7 +14,7 @@ namespace UnityStandardAssets.Cameras
         public bool protecting { get; private set; }    // used for determining if there is an object between the target and the camera
         public string dontClipTag = "Player";           // don't clip against objects with this tag (useful for not clipping against the targeted object)
 
-        private Transform m_Cam;                  // the transform of the camera
+        [SerializeField] private Transform m_Cam;                  // the transform of the camera
         private Transform m_Pivot;                // the point at which the camera pivots around
         private float m_OriginalDist;             // the original distance to the camera before any modification are made
         private float m_MoveVelocity;             // the velocity at which the camera moved
@@ -27,7 +27,7 @@ namespace UnityStandardAssets.Cameras
         private void Start()
         {
             // find the camera in the object hierarchy
-            m_Cam = GetComponentInChildren<Camera>().transform;
+            // m_Cam = GetComponentInChildren<Camera>().transform;
             m_Pivot = m_Cam.parent;
             m_OriginalDist = m_Cam.localPosition.magnitude;
             m_CurrentDist = m_OriginalDist;

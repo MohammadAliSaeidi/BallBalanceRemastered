@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace BallBalance
@@ -7,7 +8,7 @@ namespace BallBalance
 	public class PlayerManager : MonoBehaviour
 	{
 		private InputManager inputManager;
-		private CameraLookController cameraLookController;
+		internal CameraLookController cameraLookController { get; private set; }
 		private BallMovement ballMovement;
 		private GemManager gemManager;
 

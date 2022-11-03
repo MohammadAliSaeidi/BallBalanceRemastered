@@ -60,6 +60,7 @@ namespace BallBalance.Tutorial
 
 		internal void HideMessage()
 		{
+			tutorialMessageAnimEvent.e_OnAnimationComplete.RemoveAllListeners();
 			if (!_isHidden)
 			{
 				anim_TutorialMessage.CrossFadeInFixedTime("Hide", 0.05f);

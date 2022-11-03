@@ -11,7 +11,8 @@ namespace BallBalance.Tutorial
 		[SerializeField] private TutorialWall[] Walls;
 
 		[Header("Gem tutorial")]
-		[SerializeField] private OnTriggerEnterEventHandler gemTutorialTrigger;
+		[SerializeField] private Transform GemTutorialLookingPoint;
+		[SerializeField] private OnTriggerEnterEventHandler GemTutorialTrigger;
 		[SerializeField] private Animator anim_GemSection;
 
 		private TutorialUIManager uIManager;
@@ -111,18 +112,23 @@ namespace BallBalance.Tutorial
 
 				yield return new WaitUntil(() => cameraLookTutorial.IsPassed);
 				uIManager.ShowMessage("Well done, very good!");
+				yield return new WaitForSeconds(2);
 			}
 
 			// Gem tutorial
 			{
 				uIManager.ShowMessage("Now Lets get to the next part");
-				gemTutorialTrigger.e_OnTriggerEnter.AddListener(
+				yield return new WaitForSeconds(2);
+				playerManager.cameraLookController.RotateCameraTowardThe(GemTutorialLookingPoint.position, 3f);
+				uIManager.HideMessage();
+				yield return new WaitForSeconds(2);
+				anim_GemSection.Play("ground_expantion");
+				GemTutorialTrigger.e_OnTriggerEnter.AddListener(
 					delegate (Collider collider)
 					{
 						gemTutorial.StartTutorial();
-						Destroy(gemTutorialTrigger.gameObject);
+						Destroy(GemTutorialTrigger.gameObject);
 					});
-				anim_GemSection.Play("ground_expantion");
 			}
 		}
 	}

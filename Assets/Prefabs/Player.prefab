@@ -608,6 +608,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dfbc6fa6a70bcb43b44bf282b5330de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CollisionEffect: {fileID: 376487209152679474, guid: 5ace12046281dfb4b8ee5bb9d7d11718, type: 3}
+  minHitVelocityToSpawnEffect: 1
+  hitVelRange: {x: 0, y: 15}
+  emmitionRange: {x: 3, y: 20}
+  particleSpeedRange: {x: 2, y: 15}
+  particleSizeRange: {x: 0.1, y: 0.2}
 --- !u!114 &305251895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -804,6 +810,7 @@ MonoBehaviour:
   visualiseInEditor: 0
   closestDistance: 0.5
   dontClipTag: Player
+  m_Cam: {fileID: 0}
 --- !u!114 &4159121022573266967
 MonoBehaviour:
   m_ObjectHideFlags: 0

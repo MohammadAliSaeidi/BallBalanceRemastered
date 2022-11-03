@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-
 namespace BallBalance.Tutorial
 {
 	internal abstract class TutorialController : MonoBehaviour
@@ -14,7 +13,7 @@ namespace BallBalance.Tutorial
 			_controls = FindObjectOfType<InputManager>()._controls;
 		}
 
-		public void StartTutorial()
+		public virtual void StartTutorial()
 		{
 			IsPassed = false;
 			_isStarted = true;

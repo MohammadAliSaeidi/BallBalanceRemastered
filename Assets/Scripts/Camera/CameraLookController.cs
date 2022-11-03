@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace BallBalance
@@ -47,6 +48,43 @@ namespace BallBalance
 			{
 				_cameraPivot.localRotation = Quaternion.Euler(-_horizontal, _vertical, 0);
 			}
+		}
+
+		public void RotateCameraTowardThe(Vector3 targetPosition, float smooth)
+		{
+			StartCoroutine(Co_SmoothRotateToward(targetPosition, smooth));
+		}
+
+		private IEnumerator Co_SmoothRotateToward(Vector3 targetPosition, float smooth)
+		{
+			var IsLookingAt = false;
+			var lastCameraLookPermit = allowCameraLook;
+			var lastLookSmoothAmount = LookSmoothing;
+			var dir = (targetPosition - _cameraPivot.position).normalized;
+			var targetRotation = Quaternion.LookRotation(dir);
+
+			allowCameraLook = false;
+			LookSmoothing = smooth;
+
+			_horizontal = -targetRotation.eulerAngles.x;
+			_vertical = targetRotation.eulerAngles.y;
+
+			while (IsLookingAt == false)
+			{
+				if (Quaternion.Angle(_cameraPivot.rotation, targetRotation) <= 0.1f)
+				{
+					IsLookingAt = true;
+				}
+
+				yield return null;
+			}
+
+			yield return new WaitUntil(() => IsLookingAt);
+
+			yield return new WaitForSeconds(1);
+
+			allowCameraLook = lastCameraLookPermit;
+			LookSmoothing = lastLookSmoothAmount;
 		}
 	}
 }
